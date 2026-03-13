@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 
@@ -7,73 +5,60 @@ export default function ListingsPage() {
   return (
     <div>
       {/* HERO */}
-      <section className="bg-white pt-32 pb-28 md:pt-40 md:pb-36 lg:pt-44 lg:pb-44">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimateOnScroll>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl tracking-tight leading-[1.05] text-[#1a1a2e] font-light max-w-4xl">
-              Charlotte Luxury Properties. Curated, Not Filtered.
-            </h1>
-          </AnimateOnScroll>
-          <AnimateOnScroll delay={100}>
-            <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555] mt-8">
-              Every property below has been vetted against the criteria that matter to relocating families: school zone quality, commute corridor, neighborhood micro-culture, HOA health, and long-term appreciation trajectory. This is not a Zillow dump. This is a curated selection from Charlotte&apos;s luxury inventory&mdash;including off-market opportunities that never hit the MLS.
-            </p>
-          </AnimateOnScroll>
-          <AnimateOnScroll delay={200}>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Link href="/contact" className="inline-block px-8 py-4 bg-[#c9a84c] text-white text-sm tracking-[0.1em] uppercase font-semibold hover:bg-[#d4b96a] transition-all duration-300 text-center">
-                Book a Call to Discuss These Properties
-              </Link>
-              <Link href="/calculator" className="inline-block px-8 py-4 border border-[#1a1a2e] text-[#1a1a2e] text-sm tracking-[0.1em] uppercase font-semibold hover:bg-[#FAF8F5] transition-all duration-300 text-center">
-                Use the Calculator to See Your Buying Power
-              </Link>
-            </div>
-          </AnimateOnScroll>
+      <section className="relative bg-navy py-32 md:py-40 lg:py-44 overflow-hidden">
+        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-gold/[0.06] rounded-full blur-[120px]" />
+        <div className="max-w-6xl mx-auto px-6 md:px-8 relative z-10">
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.15] text-white font-semibold hero-animate max-w-4xl">
+            Charlotte Luxury Properties.{" "}
+            <span className="text-gold-light">Curated, Not Filtered.</span>
+          </h1>
+          <p className="mt-6 text-base md:text-lg leading-relaxed text-white/60 max-w-2xl font-body hero-animate hero-animate-delay-1">
+            Every property below has been vetted against the criteria that matter to relocating families: school zone quality, commute corridor, neighborhood micro-culture, HOA health, and long-term appreciation trajectory. This is not a Zillow dump.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4 hero-animate hero-animate-delay-2">
+            <Link href="/contact" className="btn-gold">Discuss These Properties</Link>
+            <Link href="/calculator" className="btn-outline">See Your Buying Power</Link>
+          </div>
         </div>
       </section>
 
       {/* PROOF BAR */}
-      <section className="bg-[#FAF8F5] border-y border-[#eee]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-xs text-[#999] tracking-[0.1em] uppercase">
-            <span>$750K&ndash;$2.5M Range</span>
-            <span className="hidden md:inline text-[#ddd]">|</span>
-            <span>Top School Zones</span>
-            <span className="hidden md:inline text-[#ddd]">|</span>
-            <span>Off-Market Access</span>
-            <span className="hidden md:inline text-[#ddd]">|</span>
-            <span>Updated Weekly</span>
+      <section className="bg-cream py-5 border-b border-warm-200">
+        <div className="max-w-6xl mx-auto px-6 md:px-8">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-warm-600 font-body">
+            <span>✓ $750K–$2.5M Range</span>
+            <span>✓ Top School Zones</span>
+            <span>✓ Off-Market Access</span>
+            <span>✓ Updated Weekly</span>
           </div>
         </div>
       </section>
 
       {/* LISTING FRAMEWORK */}
-      <section className="bg-white py-28 md:py-36 lg:py-44">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="bg-white py-14 sm:py-16 md:py-20 lg:py-24">
+        <div className="max-w-6xl mx-auto px-6 md:px-8">
           <AnimateOnScroll>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light text-center mb-8">
-              Every Listing Includes What Zillow Doesn&apos;t
+            <h2 className="font-heading text-3xl md:text-4xl tracking-tight leading-[1.2] text-warm-950 font-semibold mb-4 text-center">
+              How Kayden Presents <span className="text-gold">Each Property</span>
             </h2>
-          </AnimateOnScroll>
-          <AnimateOnScroll delay={100}>
-            <p className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-[#555] text-center mb-20">
-              Each property Kayden presents comes with full context: neighborhood positioning, financial arbitrage snapshot versus your origin market, confirmed school zone assignments, and an honest assessment of both strengths and drawbacks.
+            <p className="text-center text-warm-600 font-body max-w-2xl mx-auto mb-12">
+              Every listing includes context Zillow can&apos;t provide. Here&apos;s what you get with each curated property.
             </p>
           </AnimateOnScroll>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: "Property Headline", desc: "Not the MLS description. A one-line positioning statement with square footage, acreage, school zone, and price." },
-              { title: "Neighborhood Context", desc: "Which micro-market this property sits in, what the commute looks like, and which school feeder pattern it accesses. This is the context Zillow doesn\u2019t provide." },
-              { title: "Financial Arbitrage Snapshot", desc: "For each property, the comparable cost in your origin market. See exactly what the same home would cost in Westchester, the Bay Area, or Fairfield County." },
-              { title: "School Zone Verification", desc: "Confirmed school assignments (elementary, middle, high) with current enrollment status and any known rezoning timelines." },
-              { title: "Kayden\u2019s Assessment", desc: "A brief, honest note: what makes this property worth considering, what the drawbacks are, and who it\u2019s best suited for. Radical transparency\u2014every listing includes what\u2019s wrong with it, not just what\u2019s right." },
-              { title: "Virtual Tour Access", desc: "Schedule a virtual walkthrough or ask Kayden directly about any property. Every listing card connects you to a real conversation, not a contact form." },
+              { title: "Positioning Statement", desc: "Not the MLS description. A one-line statement: \u201c5,200 sq ft on 1.3 acres in the Weddington High School zone. $1.05M.\u201d" },
+              { title: "Neighborhood Context", desc: "Which micro-market, what the commute looks like, and which school feeder pattern it accesses." },
+              { title: "Financial Arbitrage Snapshot", desc: "The comparable cost in your origin market. \u201cThis home\u2019s equivalent in Westchester: $2.1M+. In Weddington: $1.05M.\u201d" },
+              { title: "School Zone Verification", desc: "Confirmed school assignments (elementary, middle, high) with current enrollment status and rezoning timelines." },
+              { title: "Kayden\u2019s Assessment", desc: "What makes this property worth considering, what the drawbacks are, and who it\u2019s best suited for. Radical transparency." },
+              { title: "Virtual Tour Access", desc: "Video walkthroughs and written context so your first in-person visit is productive, not exploratory." },
             ].map((item, i) => (
-              <AnimateOnScroll key={i} delay={i * 80}>
-                <div className="border border-[#eee] rounded-sm p-8">
-                  <h3 className="font-serif text-xl text-[#1a1a2e] mb-3 font-light">{item.title}</h3>
-                  <p className="text-base leading-relaxed text-[#555]">{item.desc}</p>
+              <AnimateOnScroll key={i} animation="scale-up" delay={i * 80}>
+                <div className="bg-white border border-warm-200 rounded-[8px] p-6 md:p-8 shadow-card hover:shadow-lifted hover:-translate-y-0.5 transition-all duration-300">
+                  <h3 className="font-heading text-xl text-warm-950 font-semibold mb-3">{item.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-warm-600 font-body">{item.desc}</p>
                 </div>
               </AnimateOnScroll>
             ))}
@@ -81,42 +66,51 @@ export default function ListingsPage() {
         </div>
       </section>
 
-      {/* WHY CURATED */}
-      <section className="bg-[#FAF8F5] py-28 md:py-36 lg:py-44">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            <AnimateOnScroll>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light">
-                Why Curated Beats Filtered
-              </h2>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={100}>
-              <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555]">
-                The properties on this page represent a fraction of what&apos;s available. Kayden&apos;s curated search identifies homes that match your specific financial, educational, and lifestyle criteria&mdash;including off-market opportunities that never appear on public platforms.
+      {/* COMING SOON */}
+      <section className="bg-cream py-14 sm:py-16 md:py-20 lg:py-24">
+        <div className="max-w-3xl mx-auto px-6 md:px-8 text-center">
+          <AnimateOnScroll>
+            <div className="bg-white border border-warm-200 rounded-[8px] p-8 md:p-12 shadow-card">
+              <h2 className="font-heading text-2xl md:text-3xl text-warm-950 font-semibold mb-4">Featured Listings Coming Soon</h2>
+              <p className="text-[15px] leading-relaxed text-warm-600 font-body mb-6">
+                Curated luxury properties are being vetted against Kayden&apos;s criteria: school zone quality, commute corridor, HOA health, and appreciation trajectory. Check back soon or book a call for immediate access to the full curated inventory, including off-market opportunities.
               </p>
-            </AnimateOnScroll>
-          </div>
+              <Link href="/contact" className="btn-gold">Get Your Personalized Shortlist</Link>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* WHY CURATED */}
+      <section className="bg-white py-14 sm:py-16 md:py-20 lg:py-24">
+        <div className="max-w-3xl mx-auto px-6 md:px-8">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-3xl md:text-4xl tracking-tight leading-[1.2] text-warm-950 font-semibold mb-8">
+              Why Curated <span className="text-gold">Beats Filtered</span>
+            </h2>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={100}>
+            <p className="text-base md:text-[17px] leading-relaxed text-warm-700 font-body">
+              A Zillow filter shows you 3,000 listings. A curated search shows you 5&ndash;7 that actually fit. The difference is context: school feeder verification, HOA financial health, micro-market pricing intelligence, and neighborhood culture matching that no algorithm can replicate. That&apos;s what turns a four-weekend house hunt into a productive two-day visit.
+            </p>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="bg-white py-28 md:py-36 lg:py-44">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <AnimateOnScroll>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light mb-6">
-              See Properties Selected for Your Family
+      <section className="bg-navy py-16 md:py-24 lg:py-28 relative overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-gold/[0.06] rounded-full blur-[150px]" />
+        <div className="max-w-3xl mx-auto px-6 md:px-8 text-center relative z-10">
+          <AnimateOnScroll animation="scale-up">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.2] text-white font-semibold">
+              See Properties <span className="text-gold-light">Selected for Your Family</span>
             </h2>
-          </AnimateOnScroll>
-          <AnimateOnScroll delay={100}>
-            <p className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-[#555] mb-10">
-              Book a 30-minute call. Walk through your criteria. Receive a personalized shortlist within 48 hours.
+            <p className="mt-6 text-base text-white/50 font-body">
+              Book a 30-minute call. Walk through your criteria. Receive a personalized shortlist within 48 hours. Includes off-market properties not available on Zillow or Redfin.
             </p>
-          </AnimateOnScroll>
-          <AnimateOnScroll delay={200}>
-            <Link href="/contact" className="inline-block px-10 py-4 bg-[#c9a84c] text-white text-sm tracking-[0.1em] uppercase font-semibold hover:bg-[#d4b96a] transition-all duration-300">
-              Book a Call
-            </Link>
-            <p className="text-xs text-[#999] mt-4">Includes off-market properties not available on Zillow or Redfin.</p>
+            <div className="mt-8">
+              <Link href="/contact" className="btn-gold">Book Your Strategy Call</Link>
+            </div>
           </AnimateOnScroll>
         </div>
       </section>

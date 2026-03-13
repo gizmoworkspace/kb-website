@@ -5,10 +5,16 @@ import { useEffect, useRef, ReactNode } from "react";
 interface AnimateOnScrollProps {
   children: ReactNode;
   className?: string;
+  animation?: "fade-up" | "fade-left" | "fade-right" | "scale-up";
   delay?: number;
 }
 
-export default function AnimateOnScroll({ children, className = "", delay = 0 }: AnimateOnScrollProps) {
+export default function AnimateOnScroll({
+  children,
+  className = "",
+  animation = "fade-up",
+  delay = 0,
+}: AnimateOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,13 +25,12 @@ export default function AnimateOnScroll({ children, className = "", delay = 0 }:
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
+            el.classList.add("aos-visible");
           }, delay);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
     );
 
     observer.observe(el);
@@ -33,15 +38,7 @@ export default function AnimateOnScroll({ children, className = "", delay = 0 }:
   }, [delay]);
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: 0,
-        transform: "translateY(16px)",
-        transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms`,
-      }}
-    >
+    <div ref={ref} className={`${animation} ${className}`}>
       {children}
     </div>
   );
