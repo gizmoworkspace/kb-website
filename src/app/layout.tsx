@@ -38,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="antialiased">
+        <div className="grain-overlay" />
         <Navbar />
         <main>{children}</main>
         <Footer />
