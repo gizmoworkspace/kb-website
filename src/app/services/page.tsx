@@ -17,18 +17,17 @@ export default function ServicesPage() {
         .fromTo(".services-hero-sub", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.6")
         .fromTo(".services-hero-cta", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.5");
 
-      gsap.utils.toArray<HTMLElement>(".reveal-block").forEach((el) => {
-        gsap.fromTo(el, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+      gsap.utils.toArray<HTMLElement>(".reveal-block").forEach((el, i) => {
+        gsap.fromTo(el, { opacity: 0, x: i % 2 === 0 ? -50 : 50 }, {
+          opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
           scrollTrigger: { trigger: el, start: "top 85%" },
         });
       });
 
-      // Phase timeline
       gsap.utils.toArray<HTMLElement>(".phase-item").forEach((el) => {
         const stl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 80%" } });
         stl.fromTo(el.querySelector(".phase-marker"), { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power2.out", transformOrigin: "top" });
-        stl.fromTo(el.querySelector(".phase-content"), { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, "-=0.2");
+        stl.fromTo(el.querySelector(".phase-content"), { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, "-=0.2");
       });
     }, pageRef);
     return () => ctx.revert();
@@ -38,7 +37,7 @@ export default function ServicesPage() {
     <div ref={pageRef} className="bg-navy-dark">
       {/* HERO */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/85 via-navy/75 to-navy-dark" />
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 py-32">
           <h1 className="services-hero-title font-serif display-xl text-white mb-6 opacity-0">
@@ -70,6 +69,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <div className="clt-skyline-divider" />
+
       {/* AGITATION */}
       <section className="py-20 lg:py-28">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
@@ -95,8 +96,10 @@ export default function ServicesPage() {
       </section>
 
       {/* CROSSHEAD */}
-      <section className="bg-navy py-20 lg:py-24">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center reveal-block">
+      <section className="relative py-20 lg:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1605429523419-d828acb941f7?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-navy/85" />
+        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center reveal-block">
           <h2 className="font-serif display-lg text-white">
             There&apos;s a Process That Captures the Full Arbitrage.{" "}
             <span className="text-gold">Financial, Educational, and Social.</span>
@@ -125,7 +128,7 @@ export default function ServicesPage() {
                   <div className="phase-marker w-1 h-full bg-gradient-to-b from-gold to-gold/10 rounded-full" />
                 </div>
                 <div className="phase-content pb-4">
-                  <p className="text-xs text-gold font-semibold tracking-[0.2em] uppercase mb-3">{phase.phase}</p>
+                  <p className="text-xs text-gold font-semibold tracking-[0.2em] uppercase mb-3 font-sans">{phase.phase}</p>
                   <h3 className="font-serif text-2xl text-white mb-4">{phase.title}</h3>
                   <p className="text-gray-300/80 leading-relaxed">{phase.text}</p>
                   {phase.text2 && <p className="text-gray-300/80 leading-relaxed mt-4">{phase.text2}</p>}
@@ -138,7 +141,7 @@ export default function ServicesPage() {
       </section>
 
       {/* VALUE DELIVERED */}
-      <section className="bg-navy py-20 lg:py-28">
+      <section className="section-mid py-20 lg:py-28">
         <div className="reveal-block max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-8">Value Delivered</h2>
@@ -185,7 +188,7 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQs */}
-      <section className="bg-navy py-20 lg:py-28">
+      <section className="section-mid py-20 lg:py-28">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 space-y-10">
           <div className="reveal-block glass rounded-lg p-8">
             <h3 className="font-serif text-lg text-gold mb-4">&quot;We can find a house on our own—we&apos;ve bought before.&quot;</h3>

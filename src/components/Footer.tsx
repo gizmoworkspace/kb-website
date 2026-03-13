@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
-            <span className="font-serif text-lg tracking-[0.2em] font-semibold">
+            <span className="font-serif text-lg tracking-[0.15em] font-light">
               KAYDEN BENFIELD
             </span>
             <div className="section-divider mt-4 mb-4" />

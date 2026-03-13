@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,16 +13,15 @@ export default function AboutPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero entrance
       const tl = gsap.timeline();
       tl.fromTo(".about-hero-title", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" })
         .fromTo(".about-hero-sub", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.6")
-        .fromTo(".about-hero-cta", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.5");
+        .fromTo(".about-headshot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, "-=0.5")
+        .fromTo(".about-hero-cta", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.4");
 
-      // Scroll reveals
-      gsap.utils.toArray<HTMLElement>(".reveal-block").forEach((el) => {
-        gsap.fromTo(el, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+      gsap.utils.toArray<HTMLElement>(".reveal-block").forEach((el, i) => {
+        gsap.fromTo(el, { opacity: 0, x: i % 2 === 0 ? -50 : 50 }, {
+          opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
           scrollTrigger: { trigger: el, start: "top 85%" },
         });
       });
@@ -33,20 +33,35 @@ export default function AboutPage() {
     <div ref={pageRef} className="bg-navy-dark">
       {/* HERO */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/85 via-navy/75 to-navy-dark" />
-        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 py-32">
-          <h1 className="about-hero-title font-serif display-xl text-white mb-6 opacity-0">
-            Your Agent Should Know the Tax Code as Well as the{" "}
-            <span className="text-gold">School Zones.</span>
-          </h1>
-          <p className="about-hero-sub text-lg text-gray-300/90 leading-relaxed mb-8 max-w-2xl opacity-0">
-            Kayden Benfield is a North Carolina licensed broker with INNOVATE Real Estate who specializes in one thing: helping high-income families from coastal metros capture the full financial and lifestyle arbitrage of relocating to Charlotte. No fluff. No runaround. No surprises.
-          </p>
-          <div className="about-hero-cta opacity-0">
-            <Link href="/contact" className="inline-block px-8 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
-              Book Your Relocation Strategy Call
-            </Link>
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 py-32">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+            <div className="flex-1">
+              <h1 className="about-hero-title font-serif display-xl text-white mb-6 opacity-0">
+                Your Agent Should Know the Tax Code as Well as the{" "}
+                <span className="text-gold">School Zones.</span>
+              </h1>
+              <p className="about-hero-sub text-lg text-gray-300/90 leading-relaxed mb-8 max-w-2xl opacity-0">
+                Kayden Benfield is a North Carolina licensed broker with INNOVATE Real Estate who specializes in one thing: helping high-income families from coastal metros capture the full financial and lifestyle arbitrage of relocating to Charlotte. No fluff. No runaround. No surprises.
+              </p>
+              <div className="about-hero-cta opacity-0">
+                <Link href="/contact" className="inline-block px-8 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
+                  Book Your Relocation Strategy Call
+                </Link>
+              </div>
+            </div>
+            <div className="about-headshot flex-shrink-0 opacity-0">
+              <div className="headshot-ring rounded-full overflow-hidden w-48 h-48 lg:w-64 lg:h-64">
+                <Image
+                  src="/kayden-headshot.jpg"
+                  alt="Kayden Benfield"
+                  width={256}
+                  height={256}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -61,6 +76,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <div className="clt-skyline-divider" />
 
       {/* THE AGENT PROBLEM */}
       <section className="py-20 lg:py-28">
@@ -81,8 +98,10 @@ export default function AboutPage() {
       </section>
 
       {/* CROSSHEAD */}
-      <section className="bg-navy py-20 lg:py-24">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center crosshead reveal-block">
+      <section className="relative py-20 lg:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1605429523419-d828acb941f7?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-navy/85" />
+        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center crosshead reveal-block">
           <h2 className="font-serif display-lg text-white">
             Built for Relocators. <span className="text-gold">Not for Volume.</span>
           </h2>
@@ -128,7 +147,7 @@ export default function AboutPage() {
       </section>
 
       {/* CREDENTIALS */}
-      <section className="bg-navy py-20 lg:py-28">
+      <section className="section-mid py-20 lg:py-28">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="reveal-block">
             <div className="section-divider mb-8" />
@@ -171,7 +190,7 @@ export default function AboutPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="bg-navy py-24 lg:py-32">
+      <section className="section-mid py-24 lg:py-32">
         <div className="reveal-block max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-6">Book Your Relocation Strategy Call</h2>
@@ -183,7 +202,7 @@ export default function AboutPage() {
               Book Your Relocation Strategy Call
             </Link>
           </div>
-          <p className="mt-4 text-sm text-gray-600">Direct access to Kayden. Not a scheduling coordinator.</p>
+          <p className="mt-4 text-sm text-gray-600 font-sans">Direct access to Kayden. Not a scheduling coordinator.</p>
         </div>
       </section>
 

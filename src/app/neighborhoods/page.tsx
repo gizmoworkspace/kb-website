@@ -77,11 +77,11 @@ export default function NeighborhoodsPage() {
         });
       });
 
-      // Neighborhood cards - dramatic reveal
-      gsap.utils.toArray<HTMLElement>(".hood-card").forEach((card) => {
-        const stl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 80%" } });
-        stl.fromTo(card, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" });
-        stl.fromTo(card.querySelector(".hood-image"), { scale: 1.1 }, { scale: 1, duration: 1.2, ease: "power2.out" }, "-=0.9");
+      // Neighborhood cards — dramatic alternating slide
+      gsap.utils.toArray<HTMLElement>(".hood-card").forEach((card, i) => {
+        const stl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%" } });
+        stl.fromTo(card, { opacity: 0, x: i % 2 === 0 ? -100 : 100, rotateY: i % 2 === 0 ? -5 : 5 }, { opacity: 1, x: 0, rotateY: 0, duration: 1, ease: "power3.out" });
+        stl.fromTo(card.querySelector(".hood-image"), { scale: 1.2 }, { scale: 1, duration: 1.5, ease: "power2.out" }, "-=1");
       });
     }, pageRef);
     return () => ctx.revert();
@@ -89,9 +89,9 @@ export default function NeighborhoodsPage() {
 
   return (
     <div ref={pageRef} className="bg-navy-dark">
-      {/* HERO */}
+      {/* HERO — Charlotte skyline */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/85 via-navy/75 to-navy-dark" />
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 py-32">
           <h1 className="n-hero-title font-serif display-xl text-white mb-6 opacity-0">
@@ -120,11 +120,12 @@ export default function NeighborhoodsPage() {
         </div>
       </section>
 
+      <div className="clt-skyline-divider" />
+
       {/* NEIGHBORHOODS */}
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-20 lg:py-28 space-y-24">
         {neighborhoods.map((hood, i) => (
           <div key={i} className="hood-card glass rounded-xl overflow-hidden">
-            {/* Hero image */}
             <div className="relative h-64 md:h-80 overflow-hidden">
               <img
                 src={hood.image}
@@ -134,34 +135,34 @@ export default function NeighborhoodsPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
               <div className="absolute bottom-6 left-8 right-8">
                 <h2 className="font-serif text-3xl md:text-4xl text-white mb-2">{hood.name}</h2>
-                <p className="text-gold italic text-lg">{hood.tagline}</p>
+                <p className="text-gold italic text-lg font-serif">{hood.tagline}</p>
               </div>
             </div>
 
             <div className="p-8 lg:p-10 space-y-8">
               <div>
-                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Neighborhood Profile</h3>
+                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Neighborhood Profile</h3>
                 <p className="text-gray-300/80 leading-relaxed">{hood.profile}</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Schools</h3>
+                  <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Schools</h3>
                   <p className="text-gray-300/80 leading-relaxed">{hood.schools}</p>
                 </div>
                 <div>
-                  <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Country Clubs &amp; Social</h3>
+                  <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Country Clubs &amp; Social</h3>
                   <p className="text-gray-300/80 leading-relaxed">{hood.clubs}</p>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Ideal For</h3>
+                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Ideal For</h3>
                 <p className="text-gray-300/80 leading-relaxed">{hood.idealFor}</p>
               </div>
 
               <div className="glass rounded-lg p-6">
-                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-2">Price Range</h3>
+                <h3 className="text-xs text-gold tracking-[0.2em] uppercase mb-2 font-sans">Price Range</h3>
                 <p className="text-white font-serif text-lg">{hood.price}</p>
               </div>
             </div>
@@ -170,7 +171,7 @@ export default function NeighborhoodsPage() {
       </div>
 
       {/* CLOSE */}
-      <section className="bg-navy py-24 lg:py-32">
+      <section className="section-mid py-24 lg:py-32">
         <div className="reveal-block max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-6">
@@ -187,7 +188,7 @@ export default function NeighborhoodsPage() {
               Or Run Your Numbers First in the Calculator
             </Link>
           </div>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-gray-600 font-sans">
             30 minutes. Walk through your priorities. Get your personalized shortlist.
           </p>
         </div>

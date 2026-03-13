@@ -93,7 +93,10 @@ export default function CalculatorPage() {
     <div ref={pageRef} className="bg-navy-dark">
       {/* HERO */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy to-navy-dark" />
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1605429523419-d828acb941f7?w=1920&q=80')" }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/90 via-navy/85 to-navy-dark" />
+        </div>
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 py-32">
           <h1 className="c-hero-title font-serif display-xl text-white mb-6 opacity-0">
             How Much Is Your State Costing You? Run the Math in 90 Seconds.
@@ -142,7 +145,7 @@ export default function CalculatorPage() {
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div>
-                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2">Household Income</label>
+                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2 font-sans">Household Income</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input type="text" value={income} onChange={(e) => setIncome(e.target.value)} placeholder="350,000"
@@ -150,7 +153,7 @@ export default function CalculatorPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2">Current State</label>
+                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2 font-sans">Current State</label>
                 <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)}
                   className="w-full px-4 py-3 rounded-lg bg-navy-dark/80 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50 transition-all">
                   <option value="">Select your state...</option>
@@ -164,7 +167,7 @@ export default function CalculatorPage() {
                 )}
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2">Annual Property Taxes</label>
+                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2 font-sans">Annual Property Taxes</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input type="text" value={propertyTax} onChange={(e) => setPropertyTax(e.target.value)} placeholder="35,000"
@@ -172,18 +175,18 @@ export default function CalculatorPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2">Number of Children</label>
+                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2 font-sans">Number of Children</label>
                 <input type="text" value={numChildren} onChange={(e) => setNumChildren(e.target.value)} placeholder="2"
                   className="w-full px-4 py-3 rounded-lg bg-navy-dark/80 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all" />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2">Current Tuition Per Child (Annual)</label>
+                <label className="block text-xs font-semibold text-gold tracking-[0.15em] uppercase mb-2 font-sans">Current Tuition Per Child (Annual)</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input type="text" value={tuitionPerChild} onChange={(e) => setTuitionPerChild(e.target.value)} placeholder="45,000"
                     className="w-full pl-8 pr-4 py-3 rounded-lg bg-navy-dark/80 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all" />
                 </div>
-                <p className="text-xs text-gray-600 mt-1">Enter $0 if children attend public school</p>
+                <p className="text-xs text-gray-600 mt-1 font-sans">Enter $0 if children attend public school</p>
               </div>
             </div>
 
@@ -204,9 +207,9 @@ export default function CalculatorPage() {
                     { label: "Tuition Savings", value: results.tuitionSavings },
                   ].map((item, i) => (
                     <div key={i} className="text-center">
-                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2">{item.label}</p>
+                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2 font-sans">{item.label}</p>
                       <p className="font-serif text-3xl text-gold">{fmt(item.value)}</p>
-                      <p className="text-xs text-gray-600 mt-1">per year</p>
+                      <p className="text-xs text-gray-600 mt-1 font-sans">per year</p>
                     </div>
                   ))}
                 </div>
@@ -214,17 +217,17 @@ export default function CalculatorPage() {
                 <div className="border-t border-white/5 pt-8">
                   <div className="grid md:grid-cols-3 gap-6 text-center">
                     <div>
-                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2">Total Annual Savings</p>
+                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2 font-sans">Total Annual Savings</p>
                       <p className="font-serif text-4xl text-white">{fmt(results.annualSavings)}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2">Monthly Improvement</p>
+                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2 font-sans">Monthly Improvement</p>
                       <p className="font-serif text-4xl text-white">{fmt(results.monthlySavings)}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2">10-Year Wealth Impact</p>
+                      <p className="text-xs text-gray-500 tracking-[0.15em] uppercase mb-2 font-sans">10-Year Wealth Impact</p>
                       <p className="font-serif text-4xl text-gold">{fmt(results.tenYearProjection)}</p>
-                      <p className="text-xs text-gray-600 mt-1">invested at 7% annual return</p>
+                      <p className="text-xs text-gray-600 mt-1 font-sans">invested at 7% annual return</p>
                     </div>
                   </div>
                 </div>
@@ -242,7 +245,7 @@ export default function CalculatorPage() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-20 bg-navy">
+      <section className="py-20 section-mid">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white text-center mb-16">How It Works</h2>
@@ -277,7 +280,7 @@ export default function CalculatorPage() {
       </section>
 
       {/* CLOSE */}
-      <section className="py-20 bg-navy">
+      <section className="py-20 section-mid">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 reveal-block">
           <p className="text-gray-300/80 text-lg leading-relaxed mb-6">
             Every month you spend passively researching instead of running the actual numbers is another month of savings left uncaptured. The Calculator takes 90 seconds. If the math works, you&apos;ll know exactly how much. If it doesn&apos;t, you&apos;ll have the data to stop wondering.
@@ -293,7 +296,7 @@ export default function CalculatorPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center reveal-block">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-4">Your Number Makes Sense? Let&apos;s Talk.</h2>
-          <p className="text-gray-500 mb-10">30 minutes. No pitch. Just your plan.</p>
+          <p className="text-gray-500 mb-10 font-sans">30 minutes. No pitch. Just your plan.</p>
           <Link href="/contact" className="inline-block px-10 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
             Book Your Relocation Strategy Call
           </Link>

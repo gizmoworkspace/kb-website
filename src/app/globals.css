@@ -12,12 +12,14 @@
   --color-charcoal: #2d2d3f;
   --color-slate: #64648b;
   --color-light-gray: #f7f7fa;
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-inter);
+  --color-carolina: #4b9cd3;
+  --color-teal: #00838f;
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-outfit);
 }
 
 html {
-  scroll-behavior: auto; /* GSAP handles smooth scrolling */
+  scroll-behavior: auto;
 }
 
 body {
@@ -67,24 +69,19 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Editorial display type */
+/* Editorial display type — Cormorant shines at large sizes */
 .display-xl {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  font-weight: 300;
 }
 
 .display-lg {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-
-/* Horizontal scroll container */
-.horizontal-scroll {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 2rem;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  font-weight: 300;
 }
 
 /* Stat counter styling */
@@ -93,6 +90,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   line-height: 1;
   color: var(--color-gold);
+  font-weight: 600;
 }
 
 /* Split text animation prep */
@@ -126,12 +124,25 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-gold);
 }
 
+/* Charlotte skyline decorative element */
+.clt-skyline-divider {
+  width: 100%;
+  height: 80px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' fill='none'%3E%3Cpath d='M0 80 L0 60 L40 60 L40 45 L55 45 L55 30 L65 30 L65 20 L75 20 L75 30 L85 30 L85 45 L100 45 L100 60 L130 60 L130 50 L140 50 L140 35 L148 35 L148 15 L158 15 L158 8 L168 8 L168 15 L178 15 L178 35 L186 35 L186 50 L200 50 L200 60 L250 60 L250 55 L260 55 L260 40 L270 40 L270 55 L280 55 L280 60 L330 60 L330 50 L338 50 L338 25 L345 25 L345 12 L355 12 L355 5 L365 5 L365 12 L375 12 L375 25 L382 25 L382 50 L390 50 L390 60 L440 60 L440 45 L455 45 L455 60 L500 60 L500 55 L510 55 L510 38 L518 38 L518 20 L525 20 L525 10 L535 10 L535 20 L542 20 L542 38 L550 38 L550 55 L560 55 L560 60 L620 60 L620 48 L630 48 L630 60 L680 60 L680 52 L690 52 L690 35 L698 35 L698 18 L706 18 L706 35 L714 35 L714 52 L724 52 L724 60 L780 60 L780 55 L790 55 L790 42 L800 42 L800 55 L810 55 L810 60 L860 60 L860 50 L868 50 L868 30 L876 30 L876 15 L886 15 L886 30 L894 30 L894 50 L902 50 L902 60 L960 60 L960 55 L970 55 L970 45 L980 45 L980 55 L990 55 L990 60 L1050 60 L1050 48 L1060 48 L1060 32 L1068 32 L1068 48 L1078 48 L1078 60 L1130 60 L1130 55 L1140 55 L1140 60 L1200 60 L1200 80 Z' fill='%23c9a84c' opacity='0.08'/%3E%3C/svg%3E") no-repeat center;
+  background-size: cover;
+}
+
 /* Smooth image loading */
 img {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 img.loaded, img[src] {
+  opacity: 1;
+}
+
+/* Next.js Image component fix */
+img[data-nimg] {
   opacity: 1;
 }
 
@@ -145,4 +156,87 @@ img.loaded, img[src] {
 ::-webkit-scrollbar-thumb {
   background: var(--color-gold);
   border-radius: 3px;
+}
+
+/* Section color transitions */
+.section-dark {
+  background: var(--color-navy-dark);
+}
+.section-mid {
+  background: var(--color-navy);
+}
+.section-warm {
+  background: linear-gradient(135deg, #0d0d20, #12101e);
+}
+
+/* Dramatic text reveal */
+.text-reveal-line {
+  overflow: hidden;
+  display: block;
+}
+.text-reveal-line > span {
+  display: block;
+  transform: translateY(110%);
+}
+
+/* Impact stat animation */
+.stat-slam {
+  transform: scale(3);
+  opacity: 0;
+}
+
+/* Horizontal scroll container */
+.horizontal-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+
+/* Journey room transitions */
+.room {
+  position: relative;
+  overflow: hidden;
+}
+.room::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, var(--color-navy-dark), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+.room::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--color-navy-dark), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Kayden headshot ring */
+.headshot-ring {
+  position: relative;
+}
+.headshot-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  opacity: 0.4;
+}
+.headshot-ring::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  opacity: 0.15;
 }

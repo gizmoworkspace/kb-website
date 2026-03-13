@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -109,43 +110,74 @@ const faqs = [
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const heroTextRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const agitationRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
-  const proofRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
   const horizontalInnerRef = useRef<HTMLDivElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ===== HERO: Parallax + text reveal =====
-      const heroTitle = heroTextRef.current?.querySelector("h1");
-      const heroSub = heroTextRef.current?.querySelector(".hero-subtitle");
-      const heroCtas = heroTextRef.current?.querySelector(".hero-ctas");
-      const heroNote = heroTextRef.current?.querySelector(".hero-note");
-
-      const tl = gsap.timeline();
-      if (heroTitle) {
-        tl.fromTo(heroTitle, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" });
-      }
-      if (heroSub) {
-        tl.fromTo(heroSub, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.6");
-      }
-      if (heroCtas) {
-        tl.fromTo(heroCtas, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.5");
-      }
-      if (heroNote) {
-        tl.fromTo(heroNote, { opacity: 0 }, { opacity: 1, duration: 0.6 }, "-=0.3");
-      }
-
-      // Hero parallax on scroll
+      // ===== HERO: Pinned with parallax =====
       if (heroRef.current) {
-        const bgLayer = heroRef.current.querySelector(".hero-bg");
-        if (bgLayer) {
-          gsap.to(bgLayer, {
-            y: 200,
+        const skyline = heroRef.current.querySelector(".hero-skyline");
+        const headshot = heroRef.current.querySelector(".hero-headshot-wrap");
+        const textBlock = heroRef.current.querySelector(".hero-text-block");
+        const ctas = heroRef.current.querySelector(".hero-ctas");
+        const note = heroRef.current.querySelector(".hero-note");
+
+        // Entrance timeline
+        const tl = gsap.timeline({ delay: 0.3 });
+
+        // Skyline fades in first
+        if (skyline) {
+          tl.fromTo(skyline, { scale: 1.15, opacity: 0 }, { scale: 1, opacity: 1, duration: 2, ease: "power2.out" });
+        }
+
+        // Headshot scales in with a bounce
+        if (headshot) {
+          tl.fromTo(headshot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.4)" }, "-=1.2");
+        }
+
+        // Text reveals line by line
+        const lines = heroRef.current.querySelectorAll(".text-reveal-line > span");
+        if (lines.length > 0) {
+          tl.to(lines, { y: 0, duration: 0.8, ease: "power3.out", stagger: 0.12 }, "-=0.6");
+        }
+
+        if (textBlock) {
+          const subtitle = textBlock.querySelector(".hero-subtitle");
+          if (subtitle) {
+            tl.fromTo(subtitle, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.3");
+          }
+        }
+
+        if (ctas) {
+          tl.fromTo(ctas, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, "-=0.4");
+        }
+        if (note) {
+          tl.fromTo(note, { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.2");
+        }
+
+        // Parallax on scroll — skyline moves slower
+        if (skyline) {
+          gsap.to(skyline, {
+            y: 250,
+            scale: 1.1,
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+          });
+        }
+
+        // Headshot subtle float
+        if (headshot) {
+          gsap.to(headshot, {
+            y: 80,
             scrollTrigger: {
               trigger: heroRef.current,
               start: "top top",
@@ -158,16 +190,16 @@ export default function Home() {
 
       // ===== PROOF BAR =====
       gsap.utils.toArray<HTMLElement>(".proof-item").forEach((item, i) => {
-        gsap.fromTo(item, { opacity: 0, y: 20 }, {
-          opacity: 1, y: 0, duration: 0.5,
-          scrollTrigger: { trigger: item, start: "top 90%" },
-          delay: i * 0.1,
+        gsap.fromTo(item, { opacity: 0, x: i % 2 === 0 ? -30 : 30 }, {
+          opacity: 1, x: 0, duration: 0.6,
+          scrollTrigger: { trigger: item, start: "top 92%" },
+          delay: i * 0.08,
         });
       });
 
-      // ===== STATS: Counter animation =====
+      // ===== STATS: Slam-in with impact =====
       if (statsRef.current) {
-        gsap.utils.toArray<HTMLElement>(".stat-item").forEach((el) => {
+        gsap.utils.toArray<HTMLElement>(".stat-item").forEach((el, i) => {
           const numEl = el.querySelector(".stat-num");
           if (!numEl) return;
           const target = parseFloat(numEl.getAttribute("data-target") || "0");
@@ -175,6 +207,15 @@ export default function Home() {
           const prefix = numEl.getAttribute("data-prefix") || "";
           const suffix = numEl.getAttribute("data-suffix") || "";
 
+          // Slam in from above with scale
+          gsap.fromTo(el, { y: -80, opacity: 0, scale: 1.5 }, {
+            y: 0, opacity: 1, scale: 1,
+            duration: 0.6, ease: "back.out(1.5)",
+            scrollTrigger: { trigger: el, start: "top 88%" },
+            delay: i * 0.1,
+          });
+
+          // Counter animation
           const obj = { val: 0 };
           gsap.to(obj, {
             val: target,
@@ -188,40 +229,38 @@ export default function Home() {
         });
       }
 
-      // ===== AGITATION: Staggered reveals =====
+      // ===== AGITATION: Slide in from left/right alternating =====
       if (agitationRef.current) {
-        gsap.utils.toArray<HTMLElement>(".agitation-block").forEach((block) => {
-          gsap.fromTo(block, { opacity: 0, y: 50 }, {
-            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+        gsap.utils.toArray<HTMLElement>(".agitation-block").forEach((block, i) => {
+          gsap.fromTo(block, { opacity: 0, x: i % 2 === 0 ? -80 : 80 }, {
+            opacity: 1, x: 0, duration: 1, ease: "power3.out",
             scrollTrigger: { trigger: block, start: "top 85%" },
           });
         });
       }
 
-      // ===== CROSSHEAD: Scale in =====
+      // ===== CROSSHEAD: Scale in with color shift =====
       gsap.utils.toArray<HTMLElement>(".crosshead").forEach((el) => {
-        gsap.fromTo(el, { opacity: 0, scale: 0.95 }, {
-          opacity: 1, scale: 1, duration: 1, ease: "power3.out",
+        gsap.fromTo(el, { opacity: 0, scale: 0.9, rotateX: 10 }, {
+          opacity: 1, scale: 1, rotateX: 0, duration: 1.2, ease: "power3.out",
           scrollTrigger: { trigger: el, start: "top 80%" },
         });
       });
 
-      // ===== STEPS: Timeline reveal =====
+      // ===== STEPS: Timeline reveal with dramatic entrance =====
       if (stepsRef.current) {
-        const stepEls = gsap.utils.toArray<HTMLElement>(".step-item");
-        stepEls.forEach((step, i) => {
+        gsap.utils.toArray<HTMLElement>(".step-item").forEach((step) => {
           const stl = gsap.timeline({
-            scrollTrigger: { trigger: step, start: "top 80%" },
+            scrollTrigger: { trigger: step, start: "top 82%" },
           });
-          stl.fromTo(step.querySelector(".step-num"), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" });
-          stl.fromTo(step.querySelector(".step-line"), { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power2.out" }, "-=0.2");
-          stl.fromTo(step.querySelector(".step-content"), { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
+          stl.fromTo(step.querySelector(".step-num"), { scale: 0, rotation: -180, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(2)" });
+          stl.fromTo(step.querySelector(".step-line"), { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power2.out" }, "-=0.3");
+          stl.fromTo(step.querySelector(".step-content"), { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, "-=0.3");
         });
       }
 
       // ===== HORIZONTAL SCROLL: Proof section =====
       if (horizontalRef.current && horizontalInnerRef.current) {
-        const cards = horizontalInnerRef.current.children;
         const totalWidth = horizontalInnerRef.current.scrollWidth - window.innerWidth;
 
         if (window.innerWidth >= 768 && totalWidth > 0) {
@@ -240,22 +279,22 @@ export default function Home() {
         }
       }
 
-      // ===== FAQs: Stagger =====
+      // ===== FAQs: Stagger from bottom =====
       if (faqRef.current) {
         gsap.utils.toArray<HTMLElement>(".faq-item").forEach((item, i) => {
-          gsap.fromTo(item, { opacity: 0, y: 30 }, {
-            opacity: 1, y: 0, duration: 0.6, ease: "power3.out",
-            scrollTrigger: { trigger: item, start: "top 85%" },
-            delay: i * 0.05,
+          gsap.fromTo(item, { opacity: 0, y: 50, rotateX: 5 }, {
+            opacity: 1, y: 0, rotateX: 0, duration: 0.7, ease: "power3.out",
+            scrollTrigger: { trigger: item, start: "top 88%" },
+            delay: i * 0.06,
           });
         });
       }
 
-      // ===== FINAL CTA =====
+      // ===== FINAL CTA: Dramatic reveal =====
       const ctaSection = document.querySelector(".final-cta");
       if (ctaSection) {
-        gsap.fromTo(ctaSection.querySelector(".cta-inner"), { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, duration: 1, ease: "power3.out",
+        gsap.fromTo(ctaSection.querySelector(".cta-inner"), { opacity: 0, y: 60, scale: 0.95 }, {
+          opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out",
           scrollTrigger: { trigger: ctaSection, start: "top 75%" },
         });
       }
@@ -266,53 +305,74 @@ export default function Home() {
 
   return (
     <div className="bg-navy-dark">
-      {/* ============ HERO ============ */}
+      {/* ============ HERO — Pinned with Kayden + Charlotte Skyline ============ */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background layers */}
-        <div className="hero-bg absolute inset-0">
+        {/* Charlotte skyline background */}
+        <div className="hero-skyline absolute inset-0 opacity-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80')",
+              backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/80 via-navy/70 to-navy-dark" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-transparent to-navy-dark/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/70 via-navy-dark/60 to-navy-dark" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/80 via-transparent to-navy-dark/70" />
         </div>
 
         {/* Content */}
-        <div ref={heroTextRef} className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40">
-          <div className="max-w-3xl">
-            <h1 className="font-serif display-xl text-white mb-8 opacity-0">
-              Your $350K Salary Should Feel Like $350K.{" "}
-              <span className="text-gold">Charlotte Makes the Math Work.</span>
-            </h1>
-            <p className="hero-subtitle text-lg md:text-xl text-gray-300/90 leading-relaxed mb-10 max-w-2xl opacity-0">
-              You built the career, earned the income, did everything right. Your state took half of it anyway. Charlotte&apos;s flat 3.99% tax rate, top-ranked public schools, and luxury homes at 40–60% below coastal prices give your family the financial freedom and lifestyle quality the Northeast promised but never delivered.
-            </p>
-            <div className="hero-ctas flex flex-col sm:flex-row gap-4 opacity-0">
-              <Link
-                href="/contact"
-                className="inline-block px-8 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300 text-center"
-              >
-                Book Your Relocation Strategy Call
-              </Link>
-              <Link
-                href="/calculator"
-                className="inline-block px-8 py-4 border border-white/20 text-white text-sm tracking-[0.1em] uppercase hover:bg-white/10 transition-all duration-300 text-center"
-              >
-                Run Your Numbers in the Calculator
-              </Link>
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            {/* Text side */}
+            <div className="hero-text-block flex-1 max-w-2xl">
+              <h1 className="font-serif display-xl text-white mb-8">
+                <span className="text-reveal-line"><span>Your $350K Salary</span></span>
+                <span className="text-reveal-line"><span>Should Feel Like $350K.</span></span>
+                <span className="text-reveal-line"><span className="text-gold">Charlotte Makes</span></span>
+                <span className="text-reveal-line"><span className="text-gold">the Math Work.</span></span>
+              </h1>
+              <p className="hero-subtitle text-lg md:text-xl text-gray-300/90 leading-relaxed mb-10 max-w-2xl opacity-0">
+                You built the career, earned the income, did everything right. Your state took half of it anyway. Charlotte&apos;s flat 3.99% tax rate, top-ranked public schools, and luxury homes at 40–60% below coastal prices give your family the financial freedom and lifestyle quality the Northeast promised but never delivered.
+              </p>
+              <div className="hero-ctas flex flex-col sm:flex-row gap-4 opacity-0">
+                <Link
+                  href="/contact"
+                  className="inline-block px-8 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300 text-center"
+                >
+                  Book Your Relocation Strategy Call
+                </Link>
+                <Link
+                  href="/calculator"
+                  className="inline-block px-8 py-4 border border-white/20 text-white text-sm tracking-[0.1em] uppercase hover:bg-white/10 transition-all duration-300 text-center"
+                >
+                  Run Your Numbers in the Calculator
+                </Link>
+              </div>
+              <p className="hero-note mt-5 text-sm text-gray-500 opacity-0">
+                30 minutes. No pitch. Just your numbers.
+              </p>
             </div>
-            <p className="hero-note mt-5 text-sm text-gray-500 opacity-0">
-              30 minutes. No pitch. Just your numbers.
-            </p>
+
+            {/* Kayden headshot */}
+            <div className="hero-headshot-wrap flex-shrink-0 opacity-0">
+              <div className="headshot-ring rounded-full overflow-hidden w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80">
+                <Image
+                  src="/kayden-headshot.jpg"
+                  alt="Kayden Benfield — Charlotte Luxury Real Estate"
+                  width={320}
+                  height={320}
+                  priority
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-center mt-6 text-sm tracking-[0.2em] uppercase text-gold/80 font-sans">Kayden Benfield</p>
+              <p className="text-center text-xs text-gray-500 mt-1">Licensed NC Broker · INNOVATE Real Estate</p>
+            </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50">Scroll</span>
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-sans">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-white/50 to-transparent animate-pulse" />
         </div>
       </section>
@@ -336,9 +396,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ STATS — Animated counters ============ */}
-      <section ref={statsRef} className="bg-navy-dark py-20 lg:py-28">
+      {/* ============ CHARLOTTE SKYLINE DIVIDER ============ */}
+      <div className="clt-skyline-divider" />
+
+      {/* ============ STATS — Slam-in counters ============ */}
+      <section ref={statsRef} className="section-warm py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-xs tracking-[0.3em] uppercase text-gold/60 font-sans mb-4">Charlotte by the Numbers</p>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6">
             {stats.map((s, i) => (
               <div key={i} className="stat-item text-center">
@@ -351,16 +417,16 @@ export default function Home() {
                 >
                   {s.prefix}0{s.suffix}
                 </div>
-                <div className="mt-2 text-xs tracking-[0.15em] uppercase text-gray-500">{s.label}</div>
+                <div className="mt-2 text-xs tracking-[0.15em] uppercase text-gray-500 font-sans">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ============ AGITATION ============ */}
-      <section ref={agitationRef} className="bg-navy-dark py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      {/* ============ ROOM 1: THE PAIN — Your Expensive City ============ */}
+      <section ref={agitationRef} className="room section-dark py-24 lg:py-32">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="agitation-block mb-12">
             <div className="section-divider mb-8" />
             <h2 className="font-serif display-lg text-white mb-12 leading-tight">
@@ -397,18 +463,29 @@ export default function Home() {
             </div>
 
             <blockquote className="agitation-block border-l-2 border-gold/50 pl-8 py-4">
-              <p className="text-gray-400 italic text-lg leading-relaxed">
+              <p className="text-gray-400 italic text-lg leading-relaxed font-serif">
                 &quot;It feels like at the end of the month, after all our expenses, that it&apos;s still difficult to save any substantial amount of money… it feels like 3/4 of the money is already gone.&quot;
               </p>
-              <cite className="block mt-3 text-sm text-gray-600 not-italic">— r/HENRYfinance</cite>
+              <cite className="block mt-3 text-sm text-gray-600 not-italic font-sans">— r/HENRYfinance</cite>
             </blockquote>
           </div>
         </div>
       </section>
 
-      {/* ============ CROSSHEAD ============ */}
-      <section className="bg-navy py-20 lg:py-24">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center crosshead">
+      {/* ============ ROOM 2: THE REVELATION — Charlotte ============ */}
+      <section className="relative py-24 lg:py-28 overflow-hidden">
+        {/* Charlotte skyline background for this room */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1605429523419-d828acb941f7?w=1920&q=80')",
+            }}
+          />
+          <div className="absolute inset-0 bg-navy/85" />
+        </div>
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 text-center crosshead">
+          <p className="text-xs tracking-[0.3em] uppercase text-gold/60 font-sans mb-6">Welcome to Charlotte</p>
           <h2 className="font-serif display-lg text-white leading-tight">
             The Problem Isn&apos;t Discipline. It&apos;s Geography.
             <br />
@@ -417,11 +494,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ HOW IT WORKS — Timeline steps ============ */}
-      <section ref={stepsRef} className="bg-navy-dark py-20 lg:py-28">
+      {/* ============ ROOM 3: THE PROCESS ============ */}
+      <section ref={stepsRef} className="section-dark py-24 lg:py-32">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-20">
             <div className="section-divider mx-auto mb-8" />
+            <p className="text-xs tracking-[0.3em] uppercase text-gold/60 font-sans mb-4">Your Relocation, Engineered</p>
             <h2 className="font-serif display-lg text-white">
               Your Relocation, Engineered from Tax Code to Country Club.
             </h2>
@@ -451,7 +529,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ DEEP PROOF — Horizontal scroll ============ */}
+      {/* ============ ROOM 4: THE PROOF — Horizontal scroll ============ */}
       <section ref={horizontalRef} className="bg-navy min-h-screen flex items-center overflow-hidden">
         <div className="w-full">
           <div className="px-6 lg:px-8 mb-12 max-w-7xl mx-auto">
@@ -483,14 +561,14 @@ export default function Home() {
             ))}
           </div>
 
-          <p className="px-6 lg:px-8 mt-8 text-center text-xs text-gray-600 max-w-7xl mx-auto">
+          <p className="px-6 lg:px-8 mt-8 text-center text-xs text-gray-600 max-w-7xl mx-auto font-sans">
             All data verifiable. Sources: IRS migration data, U.S. Census, Charlotte Regional Business Alliance, U.S. News school rankings, CLT Airport authority.
           </p>
         </div>
       </section>
 
-      {/* ============ SWITCH — WHY THIS AGENT ============ */}
-      <section className="bg-navy-dark py-20 lg:py-28">
+      {/* ============ ROOM 5: WHY THIS AGENT ============ */}
+      <section className="section-warm py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="agitation-block">
             <div className="section-divider mb-8" />
@@ -510,7 +588,7 @@ export default function Home() {
       </section>
 
       {/* ============ FAQs ============ */}
-      <section ref={faqRef} className="bg-navy py-20 lg:py-28">
+      <section ref={faqRef} className="section-mid py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="section-divider mb-8" />
           <h2 className="font-serif display-lg text-white mb-16">
@@ -539,8 +617,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ Charlotte Skyline Divider ============ */}
+      <div className="clt-skyline-divider" style={{ transform: "scaleX(-1)" }} />
+
       {/* ============ FINAL CTA ============ */}
-      <section className="final-cta bg-navy-dark py-24 lg:py-32">
+      <section className="final-cta section-dark py-28 lg:py-36">
         <div className="cta-inner max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-6">
@@ -563,11 +644,11 @@ export default function Home() {
               Not Ready to Talk? Run Your Numbers First.
             </Link>
           </div>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-gray-600 font-sans">
             90 seconds. See your exact annual savings.
           </p>
 
-          <div className="mt-16 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500">
+          <div className="mt-16 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500 font-sans">
             <span>✦ 157 new residents daily</span>
             <span>✦ 3.99% flat state tax</span>
             <span>✦ 191 nonstop CLT flights</span>

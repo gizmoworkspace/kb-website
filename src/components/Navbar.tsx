@@ -48,7 +48,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 group">
-            <span className={`font-serif text-xl tracking-[0.2em] font-semibold transition-colors duration-500 ${
+            <span className={`font-serif text-xl tracking-[0.15em] font-light transition-colors duration-500 ${
               scrolled ? "text-white" : "text-white"
             }`}>
               KAYDEN BENFIELD

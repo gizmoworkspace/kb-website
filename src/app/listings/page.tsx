@@ -64,10 +64,9 @@ export default function ListingsPage() {
       });
 
       gsap.utils.toArray<HTMLElement>(".listing-card").forEach((card, i) => {
-        gsap.fromTo(card, { opacity: 0, y: 60 }, {
-          opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+        gsap.fromTo(card, { opacity: 0, x: i % 2 === 0 ? -80 : 80 }, {
+          opacity: 1, x: 0, duration: 1, ease: "power3.out",
           scrollTrigger: { trigger: card, start: "top 85%" },
-          delay: i * 0.05,
         });
       });
     }, pageRef);
@@ -78,7 +77,7 @@ export default function ListingsPage() {
     <div ref={pageRef} className="bg-navy-dark">
       {/* HERO */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80')" }} />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')" }} />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/85 via-navy/75 to-navy-dark" />
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 py-32">
           <h1 className="l-hero-title font-serif display-xl text-white mb-6 opacity-0">
@@ -109,6 +108,8 @@ export default function ListingsPage() {
         </div>
       </section>
 
+      <div className="clt-skyline-divider" />
+
       {/* LISTINGS */}
       <section className="py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 space-y-16">
@@ -118,7 +119,7 @@ export default function ListingsPage() {
                 <img src={listing.image} alt={listing.neighborhood} className="w-full h-full object-cover opacity-100 hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
                 <div className="absolute bottom-6 left-8">
-                  <span className="text-xs text-gold tracking-[0.2em] uppercase">{listing.neighborhood}</span>
+                  <span className="text-xs text-gold tracking-[0.2em] uppercase font-sans">{listing.neighborhood}</span>
                 </div>
               </div>
 
@@ -127,22 +128,22 @@ export default function ListingsPage() {
 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Neighborhood Context</h4>
+                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Neighborhood Context</h4>
                     <p className="text-gray-300/80 leading-relaxed">{listing.neighborhoodContext}</p>
                   </div>
                   <div>
-                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Financial Arbitrage Snapshot</h4>
+                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Financial Arbitrage Snapshot</h4>
                     <p className="text-gray-300/80 leading-relaxed font-medium">{listing.arbitrage}</p>
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">School Zone Verification</h4>
+                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">School Zone Verification</h4>
                     <p className="text-gray-300/80 leading-relaxed">{listing.schools}</p>
                   </div>
                   <div>
-                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3">Kayden&apos;s Assessment</h4>
+                    <h4 className="text-xs text-gold tracking-[0.2em] uppercase mb-3 font-sans">Kayden&apos;s Assessment</h4>
                     <p className="text-gray-300/80 leading-relaxed">{listing.assessment}</p>
                   </div>
                 </div>
@@ -162,7 +163,7 @@ export default function ListingsPage() {
       </section>
 
       {/* SWITCH */}
-      <section className="bg-navy py-20">
+      <section className="section-mid py-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center reveal-block">
           <div className="section-divider mx-auto mb-8" />
           <h2 className="font-serif display-lg text-white mb-8">Why Curated Beats Filtered</h2>
@@ -179,7 +180,7 @@ export default function ListingsPage() {
             The properties on this page represent a fraction of what&apos;s available. Kayden&apos;s curated search identifies homes that match your specific financial, educational, and lifestyle criteria—including off-market opportunities that never appear on public platforms.
           </p>
           <h2 className="font-serif display-lg text-white mb-4">See Properties Selected for Your Family</h2>
-          <p className="text-gray-500 mb-10">
+          <p className="text-gray-500 mb-10 font-sans">
             Book a 30-minute call. Walk through your criteria. Receive a personalized shortlist within 48 hours.
           </p>
           <Link href="/contact" className="inline-block px-10 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
