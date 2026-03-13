@@ -8,7 +8,7 @@ export default function MobileCTA() {
   if (pathname === "/contact") return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-cream/95 backdrop-blur-md border-t border-warm-200 px-4 py-3 flex gap-3">
+    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-[#0a0a14]/95 backdrop-blur-md border-t border-white/5 px-4 py-3 flex gap-3">
       <Link
         href="/contact"
         className="btn-gold flex-1 !py-3 text-center"
@@ -17,7 +17,7 @@ export default function MobileCTA() {
       </Link>
       <Link
         href="/calculator"
-        className="btn-outline-dark flex-1 !py-3 text-center"
+        className="btn-outline flex-1 !py-3 text-center"
       >
         Run Your Numbers
       </Link>

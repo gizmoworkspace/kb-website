@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${outfit.variable}`}>
-      <body className="antialiased bg-cream text-warm-900 font-body">
+      <body className="antialiased bg-[#0a0a14] text-white font-body">
         <Navbar />
         <main>{children}</main>
         <Footer />
