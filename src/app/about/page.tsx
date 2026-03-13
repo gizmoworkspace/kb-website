@@ -2,211 +2,207 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 export default function AboutPage() {
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      tl.fromTo(".about-hero-title", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" })
-        .fromTo(".about-hero-sub", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.6")
-        .fromTo(".about-headshot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, "-=0.5")
-        .fromTo(".about-hero-cta", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.4");
-
-      gsap.utils.toArray<HTMLElement>(".reveal-block").forEach((el, i) => {
-        gsap.fromTo(el, { opacity: 0, x: i % 2 === 0 ? -50 : 50 }, {
-          opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 85%" },
-        });
-      });
-    }, pageRef);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={pageRef} className="bg-navy-dark">
+    <div>
       {/* HERO */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80')" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/85 via-navy/75 to-navy-dark" />
-        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 py-32">
-          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-            <div className="flex-1">
-              <h1 className="about-hero-title font-serif display-xl text-white mb-6 opacity-0">
-                Your Agent Should Know the Tax Code as Well as the{" "}
-                <span className="text-gold">School Zones.</span>
-              </h1>
-              <p className="about-hero-sub text-lg text-gray-300/90 leading-relaxed mb-8 max-w-2xl opacity-0">
-                Kayden Benfield is a North Carolina licensed broker with INNOVATE Real Estate who specializes in one thing: helping high-income families from coastal metros capture the full financial and lifestyle arbitrage of relocating to Charlotte. No fluff. No runaround. No surprises.
-              </p>
-              <div className="about-hero-cta opacity-0">
-                <Link href="/contact" className="inline-block px-8 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
+      <section className="bg-white pt-32 pb-28 md:pt-40 md:pb-36 lg:pt-44 lg:pb-44">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <AnimateOnScroll>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-7xl tracking-tight leading-[1.05] text-[#1a1a2e] font-light">
+                  Your Agent Should Know the Tax Code as Well as the School Zones.
+                </h1>
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={100}>
+                <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555] mt-8">
+                  Kayden Benfield is a North Carolina licensed broker with INNOVATE Real Estate who specializes in one thing: helping high-income families from coastal metros capture the full financial and lifestyle arbitrage of relocating to Charlotte. No fluff. No runaround. No surprises.
+                </p>
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={200}>
+                <Link href="/contact" className="inline-block mt-10 px-8 py-4 bg-[#c9a84c] text-white text-sm tracking-[0.1em] uppercase font-semibold hover:bg-[#d4b96a] transition-all duration-300">
                   Book Your Relocation Strategy Call
                 </Link>
-              </div>
+              </AnimateOnScroll>
             </div>
-            <div className="about-headshot flex-shrink-0 opacity-0">
-              <div className="headshot-ring rounded-full overflow-hidden w-48 h-48 lg:w-64 lg:h-64">
-                <Image
-                  src="/kayden-headshot.jpg"
-                  alt="Kayden Benfield"
-                  width={256}
-                  height={256}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="hidden lg:flex justify-end">
+              <AnimateOnScroll delay={200}>
+                <div className="relative w-[400px] h-[500px]">
+                  <Image
+                    src="/kayden-headshot.jpg"
+                    alt="Kayden Benfield"
+                    fill
+                    className="object-cover"
+                    style={{ maskImage: "radial-gradient(ellipse at center, black 60%, transparent 100%)" }}
+                    priority
+                  />
+                </div>
+              </AnimateOnScroll>
             </div>
           </div>
         </div>
       </section>
 
       {/* PROOF BAR */}
-      <section className="bg-navy border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-400">
-            {["NC Licensed Broker (highest state standard)", "INNOVATE Real Estate — #1 Non-Franchised Brokerage, East Coast", "Equity Owner in Brokerage — Your Outcome Is His Outcome", "Multi-State MLS Access Across 10 States"].map((item, i) => (
-              <span key={i} className="flex items-center gap-2"><span className="text-gold text-xs">✦</span> {item}</span>
-            ))}
+      <section className="bg-[#FAF8F5] border-y border-[#eee]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-xs text-[#999] tracking-[0.1em] uppercase">
+            <span>NC Licensed Broker (highest state standard)</span>
+            <span className="hidden md:inline text-[#ddd]">|</span>
+            <span>INNOVATE Real Estate — #1 Non-Franchised Brokerage, East Coast</span>
+            <span className="hidden md:inline text-[#ddd]">|</span>
+            <span>Equity Owner in Brokerage — Your Outcome Is His Outcome</span>
+            <span className="hidden md:inline text-[#ddd]">|</span>
+            <span>Multi-State MLS Access Across 10 States</span>
           </div>
         </div>
       </section>
 
-      <div className="clt-skyline-divider" />
-
-      {/* THE AGENT PROBLEM */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="reveal-block">
-            <div className="section-divider mb-8" />
-            <h2 className="font-serif display-lg text-white mb-8">The Agent Problem</h2>
-          </div>
-          <div className="reveal-block text-gray-300/80 leading-relaxed space-y-4">
-            <p>
-              You&apos;ve probably worked with a real estate agent before. And if your experience was anything like most high-income relocators&apos;, it looked something like this: an agent who couldn&apos;t explain the tax implications of crossing state lines. Properties shown that blatantly ignored your stated criteria. Communication blackouts during the most stressful weeks of the process. Hand-offs to a junior team member who had never heard your name.
-            </p>
-            <p>
-              When you&apos;re moving your family 800 miles and deploying $1M+ in capital, that&apos;s not a minor inconvenience. That&apos;s a six-figure risk managed by someone who treats your transaction like one of forty in their pipeline.
-            </p>
+      {/* AGENT PROBLEM */}
+      <section className="bg-white py-28 md:py-36 lg:py-44">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            <AnimateOnScroll>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light">
+                The Agent Problem
+              </h2>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={100}>
+              <div>
+                <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555] mb-6">
+                  You&apos;ve probably worked with a real estate agent before. And if your experience was anything like most high-income relocators&apos;, it looked something like this: an agent who couldn&apos;t explain the tax implications of crossing state lines. Properties shown that blatantly ignored your stated criteria. Communication blackouts during the most stressful weeks of the process. Hand-offs to a junior team member who had never heard your name.
+                </p>
+                <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555]">
+                  When you&apos;re moving your family 800 miles and deploying $1M+ in capital, that&apos;s not a minor inconvenience. That&apos;s a six-figure risk managed by someone who treats your transaction like one of forty in their pipeline.
+                </p>
+              </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
 
       {/* CROSSHEAD */}
-      <section className="relative py-20 lg:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1605429523419-d828acb941f7?w=1920&q=80')" }} />
-        <div className="absolute inset-0 bg-navy/85" />
-        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center crosshead reveal-block">
-          <h2 className="font-serif display-lg text-white">
-            Built for Relocators. <span className="text-gold">Not for Volume.</span>
-          </h2>
+      <section className="bg-[#1a1a2e] py-28 md:py-36 lg:py-44">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <AnimateOnScroll>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-white font-light">
+              Built for Relocators. Not for Volume.
+            </h2>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* WHY KAYDEN BUILT THIS */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="reveal-block mb-16">
-            <div className="section-divider mb-8" />
-            <h2 className="font-serif display-lg text-white mb-12">Why Kayden Built This</h2>
-            <h3 className="font-serif text-xl text-gold mb-4">The Origin</h3>
-            <div className="text-gray-300/80 leading-relaxed space-y-4">
-              <p>
-                Kayden Benfield earned his broker&apos;s license while completing his degree at Appalachian State University—building a real estate career and finishing school simultaneously. That work ethic is the foundation of everything he does today.
+      {/* ORIGIN STORY + APPROACH */}
+      <section className="bg-[#FAF8F5] py-28 md:py-36 lg:py-44">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <AnimateOnScroll>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light mb-16">
+              Why Kayden Built This
+            </h2>
+          </AnimateOnScroll>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-24">
+            <AnimateOnScroll>
+              <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555] mb-6">
+                Kayden Benfield earned his broker&apos;s license while completing his degree at Appalachian State University&mdash;building a real estate career and finishing school simultaneously. That work ethic is the foundation of everything he does today.
               </p>
-              <p>
+              <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555]">
                 He watched talented professionals relocate to the Charlotte metro and make avoidable mistakes: buying in the wrong neighborhood because they relied on Zillow filters instead of local knowledge. Overpaying by $50K+ because they didn&apos;t understand micro-market dynamics. Spending their first year feeling isolated because no one helped them connect to the social fabric of their new community. They&apos;d captured the financial arbitrage on paper but lost half of it through bad decisions and missed connections.
               </p>
-              <p>Kayden built his relocation advisory to close that gap.</p>
-            </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={100}>
+              <p className="text-base md:text-lg leading-relaxed max-w-2xl text-[#555]">
+                Kayden built his relocation advisory to close that gap.
+              </p>
+            </AnimateOnScroll>
           </div>
 
-          <div className="reveal-block mb-8">
-            <h3 className="font-serif text-2xl text-white mb-10">The Approach</h3>
-          </div>
-
-          <div className="space-y-10">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {[
-              { title: "Lifestyle First, Properties Last", text: "Your home search starts with a deep conversation about how you live today—your commute, your kids' school priorities, your weekend patterns, your spouse's social needs, your proximity requirements. Properties are the final step, not the first. By the time you see a home, it's already been validated against every dimension that matters to your family." },
-              { title: "Radical Transparency as a Standard", text: "Kayden is known for being straightforward, honest, and direct. He tells you exactly what's happening, what to expect, and walks you through every step. If a property has foundation concerns, you hear about it before you ask. If a neighborhood is about to be rezoned, you know before you make an offer. If a deal doesn't serve your long-term wealth, he'll tell you to walk away—even when it costs him the commission." },
-              { title: "Ownership Stake, Not Just a License", text: "Kayden holds equity ownership in INNOVATE Real Estate—the #1 non-franchised brokerage on the East Coast by transaction volume. His name is on the company. Your transaction is a direct reflection of his personal brand, his professional reputation, and his financial interest. That's a different incentive structure than a franchise agent who clocks out at 5 PM." },
-              { title: "Your Agent. Not Your Agent's Assistant.", text: "Kayden isn't juggling 40 deals. When you hire him, you get him—direct cell, direct communication, direct accountability. For a $1M+ relocation, that level of personal attention is the difference between a smooth transition and a six-figure mistake." },
+              { title: "Lifestyle First, Properties Last", desc: "Your home search starts with a deep conversation about how you live today\u2014your commute, your kids\u2019 school priorities, your weekend patterns, your spouse\u2019s social needs, your proximity requirements. Properties are the final step, not the first. By the time you see a home, it\u2019s already been validated against every dimension that matters to your family." },
+              { title: "Radical Transparency as a Standard", desc: "Kayden is known for being straightforward, honest, and direct. He tells you exactly what\u2019s happening, what to expect, and walks you through every step. If a property has foundation concerns, you hear about it before you ask. If a neighborhood is about to be rezoned, you know before you make an offer. If a deal doesn\u2019t serve your long-term wealth, he\u2019ll tell you to walk away\u2014even when it costs him the commission." },
+              { title: "Ownership Stake, Not Just a License", desc: "Kayden holds equity ownership in INNOVATE Real Estate\u2014the #1 non-franchised brokerage on the East Coast by transaction volume. His name is on the company. Your transaction is a direct reflection of his personal brand, his professional reputation, and his financial interest. That\u2019s a different incentive structure than a franchise agent who clocks out at 5 PM." },
+              { title: "Your Agent. Not Your Agent\u2019s Assistant.", desc: "Kayden isn\u2019t juggling 40 deals. When you hire him, you get him\u2014direct cell, direct communication, direct accountability. For a $1M+ relocation, that level of personal attention is the difference between a smooth transition and a six-figure mistake." },
             ].map((item, i) => (
-              <div key={i} className="reveal-block glass rounded-lg p-8">
-                <h4 className="font-serif text-lg text-gold mb-4">{item.title}</h4>
-                <p className="text-gray-300/80 leading-relaxed">{item.text}</p>
-              </div>
+              <AnimateOnScroll key={i} delay={i * 80}>
+                <div className="p-8 bg-white rounded-sm">
+                  <h3 className="font-serif text-xl md:text-2xl text-[#1a1a2e] mb-4 font-light">{item.title}</h3>
+                  <p className="text-base leading-relaxed text-[#555]">{item.desc}</p>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* CREDENTIALS */}
-      <section className="section-mid py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="reveal-block">
-            <div className="section-divider mb-8" />
-            <h2 className="font-serif display-lg text-white mb-10">Credentials</h2>
-          </div>
-          <div className="space-y-4">
+      <section className="bg-white py-28 md:py-36 lg:py-44">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <AnimateOnScroll>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light mb-16">
+              Credentials
+            </h2>
+          </AnimateOnScroll>
+          <div className="max-w-3xl">
             {[
-              "Licensed North Carolina Broker — NC requires broker-level licensure for all agents, a higher standard than most states",
-              "INNOVATE Real Estate — #1 non-franchised brokerage on the East Coast by transaction volume, operations in 10+ states",
-              "Agent Equity Model — ownership shares in the brokerage align Kayden's incentives directly with client outcomes",
-              "Tech-Forward Platform — Real Geeks CRM, multi-state MLS access, institutional-grade digital marketing infrastructure",
-              "Geographic Range — Charlotte metro, western NC mountains (Boone, Black Mountain, Hendersonville), and coastal SC",
-            ].map((cred, i) => (
-              <div key={i} className="reveal-block flex items-start gap-4">
-                <span className="text-gold mt-1 flex-shrink-0 text-xs">✦</span>
-                <p className="text-gray-300/80">{cred}</p>
-              </div>
+              "Licensed North Carolina Broker \u2014 NC requires broker-level licensure for all agents, a higher standard than most states",
+              "INNOVATE Real Estate \u2014 #1 non-franchised brokerage on the East Coast by transaction volume, operations in 10+ states",
+              "Agent Equity Model \u2014 ownership shares in the brokerage align Kayden\u2019s incentives directly with client outcomes",
+              "Tech-Forward Platform \u2014 Real Geeks CRM, multi-state MLS access, institutional-grade digital marketing infrastructure",
+              "Geographic Range \u2014 Charlotte metro, western NC mountains (Boone, Black Mountain, Hendersonville), and coastal SC",
+            ].map((item, i) => (
+              <AnimateOnScroll key={i} delay={i * 60}>
+                <div className="flex items-start gap-4 py-4 border-b border-[#eee]">
+                  <span className="text-[#c9a84c] mt-1 flex-shrink-0">&#10003;</span>
+                  <p className="text-base leading-relaxed text-[#555]">{item}</p>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQs */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 space-y-10">
-          <div className="reveal-block glass rounded-lg p-8">
-            <h3 className="font-serif text-lg text-gold mb-4">&quot;He seems young. Does he have enough experience?&quot;</h3>
-            <p className="text-gray-300/80 leading-relaxed">
-              Kayden built a real estate career while completing his university degree. He holds broker-level licensure in a state that requires the highest standard for all agents. He&apos;s backed by INNOVATE&apos;s institutional infrastructure, has equity ownership in the brokerage, and treats every client as his most important because at this stage of a focused practice, you are. The question isn&apos;t how many transactions he&apos;s closed. The question is how much attention and care your $1M+ relocation will receive.
-            </p>
-          </div>
-
-          <div className="reveal-block glass rounded-lg p-8">
-            <h3 className="font-serif text-lg text-gold mb-4">&quot;Why not just use a big-name Charlotte firm?&quot;</h3>
-            <p className="text-gray-300/80 leading-relaxed">
-              Large firms offer brand recognition. What they rarely offer is direct access to the person managing your transaction. Heritage brokerages cycle clients through intake coordinators, junior agents, and administrative staff. Kayden answers his own phone. He writes his own market analyses. He shows up to every walkthrough. The precision of an established firm. The responsiveness of someone who answers their own phone.
-            </p>
-          </div>
+      {/* CLOSE / FAQ */}
+      <section className="bg-[#FAF8F5] py-28 md:py-36 lg:py-44">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+          {[
+            { q: "\u201cHe seems young. Does he have enough experience?\u201d", a: "Kayden built a real estate career while completing his university degree. He holds broker-level licensure in a state that requires the highest standard for all agents. He\u2019s backed by INNOVATE\u2019s institutional infrastructure, has equity ownership in the brokerage, and treats every client as his most important because at this stage of a focused practice, you are. The question isn\u2019t how many transactions he\u2019s closed. The question is how much attention and care your $1M+ relocation will receive." },
+            { q: "\u201cWhy not just use a big-name Charlotte firm?\u201d", a: "Large firms offer brand recognition. What they rarely offer is direct access to the person managing your transaction. Heritage brokerages cycle clients through intake coordinators, junior agents, and administrative staff. Kayden answers his own phone. He writes his own market analyses. He shows up to every walkthrough. The precision of an established firm. The responsiveness of someone who answers their own phone." },
+          ].map((item, i) => (
+            <AnimateOnScroll key={i} delay={i * 100}>
+              <div className="mb-12">
+                <h3 className="font-serif text-xl md:text-2xl text-[#1a1a2e] mb-4 font-light">{item.q}</h3>
+                <p className="text-base md:text-lg leading-relaxed text-[#555]">{item.a}</p>
+              </div>
+            </AnimateOnScroll>
+          ))}
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="section-mid py-24 lg:py-32">
-        <div className="reveal-block max-w-3xl mx-auto px-6 lg:px-8 text-center">
-          <div className="section-divider mx-auto mb-8" />
-          <h2 className="font-serif display-lg text-white mb-6">Book Your Relocation Strategy Call</h2>
-          <p className="text-gray-300/80 leading-relaxed mb-8">
-            30 minutes. No pitch. Just your numbers and your questions, answered directly.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="px-10 py-4 bg-gold text-navy font-semibold text-sm tracking-[0.1em] uppercase hover:bg-gold-light transition-all duration-300">
+      <section className="bg-white py-28 md:py-36 lg:py-44">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <AnimateOnScroll>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-[#1a1a2e] font-light mb-6">
+              Book Your Relocation Strategy Call
+            </h2>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={100}>
+            <p className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-[#555] mb-10">
+              30 minutes. No pitch. Just your numbers and your questions, answered directly.
+            </p>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={200}>
+            <Link href="/contact" className="inline-block px-10 py-4 bg-[#c9a84c] text-white text-sm tracking-[0.1em] uppercase font-semibold hover:bg-[#d4b96a] transition-all duration-300">
               Book Your Relocation Strategy Call
             </Link>
-          </div>
-          <p className="mt-4 text-sm text-gray-600 font-sans">Direct access to Kayden. Not a scheduling coordinator.</p>
+            <p className="text-xs text-[#999] mt-4">Direct access to Kayden. Not a scheduling coordinator.</p>
+          </AnimateOnScroll>
         </div>
       </section>
-
-      <div className="h-16 lg:hidden" />
     </div>
   );
 }

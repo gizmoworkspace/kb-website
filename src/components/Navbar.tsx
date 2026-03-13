@@ -1,12 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,40 +18,25 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  useEffect(() => setIsOpen(false), [pathname]);
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-navy/95 backdrop-blur-md border-b border-white/5"
-          : "bg-transparent"
-      }`}
-    >
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${scrolled ? "shadow-sm" : ""}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3 group">
-            <span className={`font-serif text-xl tracking-[0.15em] font-light transition-colors duration-500 ${
-              scrolled ? "text-white" : "text-white"
-            }`}>
+          <Link href="/" className="flex items-center">
+            <span className="font-serif text-xl tracking-[0.15em] font-light text-[#1a1a2e]">
               KAYDEN BENFIELD
             </span>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -63,8 +44,8 @@ export default function Navbar() {
                 href={link.href}
                 className={`text-xs tracking-[0.15em] uppercase transition-colors duration-300 link-underline ${
                   pathname === link.href
-                    ? "text-gold font-medium"
-                    : `${scrolled ? "text-gray-300" : "text-white/70"} hover:text-gold`
+                    ? "text-[#c9a84c] font-medium"
+                    : "text-[#555] hover:text-[#c9a84c]"
                 }`}
               >
                 {link.label}
@@ -72,55 +53,31 @@ export default function Navbar() {
             ))}
             <Link
               href="/contact"
-              className="ml-4 px-6 py-2.5 bg-gold text-navy text-xs tracking-[0.15em] uppercase font-semibold hover:bg-gold-light transition-all duration-300"
+              className="ml-4 px-6 py-2.5 bg-[#c9a84c] text-white text-xs tracking-[0.15em] uppercase font-semibold hover:bg-[#d4b96a] transition-all duration-300"
             >
               Book a Call
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2"
-            aria-label="Toggle menu"
-          >
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2" aria-label="Toggle menu">
             <div className="w-6 flex flex-col gap-1.5">
-              <span
-                className={`block h-px transition-all duration-300 ${
-                  scrolled ? "bg-white" : "bg-white"
-                } ${isOpen ? "rotate-45 translate-y-[7px]" : ""}`}
-              />
-              <span
-                className={`block h-px transition-all duration-300 ${
-                  scrolled ? "bg-white" : "bg-white"
-                } ${isOpen ? "opacity-0" : ""}`}
-              />
-              <span
-                className={`block h-px transition-all duration-300 ${
-                  scrolled ? "bg-white" : "bg-white"
-                } ${isOpen ? "-rotate-45 -translate-y-[7px]" : ""}`}
-              />
+              <span className={`block h-px bg-[#1a1a2e] transition-all duration-300 ${isOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+              <span className={`block h-px bg-[#1a1a2e] transition-all duration-300 ${isOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-px bg-[#1a1a2e] transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
             </div>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`lg:hidden transition-all duration-500 overflow-hidden ${
-          isOpen ? "max-h-[500px]" : "max-h-0"
-        }`}
-      >
-        <div className="px-6 py-8 bg-navy/95 backdrop-blur-md border-t border-white/5 space-y-4">
+      <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[500px]" : "max-h-0"}`}>
+        <div className="px-6 py-8 bg-white border-t border-[#eee] space-y-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
               className={`block text-xs tracking-[0.15em] uppercase py-2 ${
-                pathname === link.href
-                  ? "text-gold font-medium"
-                  : "text-white/70"
+                pathname === link.href ? "text-[#c9a84c] font-medium" : "text-[#555]"
               }`}
             >
               {link.label}
@@ -129,7 +86,7 @@ export default function Navbar() {
           <Link
             href="/contact"
             onClick={() => setIsOpen(false)}
-            className="block text-center mt-6 px-6 py-3 bg-gold text-navy text-xs tracking-[0.15em] uppercase font-semibold"
+            className="block text-center mt-6 px-6 py-3 bg-[#c9a84c] text-white text-xs tracking-[0.15em] uppercase font-semibold"
           >
             Book a Call
           </Link>

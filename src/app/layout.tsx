@@ -39,7 +39,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="antialiased">
-        <div className="grain-overlay" />
         <Navbar />
         <main>{children}</main>
         <Footer />
