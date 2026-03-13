@@ -5,14 +5,12 @@ import { useEffect, useRef, ReactNode } from "react";
 interface AnimateOnScrollProps {
   children: ReactNode;
   className?: string;
-  animation?: "fade-up" | "fade-left" | "fade-right" | "scale-up";
   delay?: number;
 }
 
 export default function AnimateOnScroll({
   children,
   className = "",
-  animation = "fade-up",
   delay = 0,
 }: AnimateOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,10 +19,13 @@ export default function AnimateOnScroll({
     const el = ref.current;
     if (!el) return;
 
+    el.classList.add("aos-hidden");
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
+            el.classList.remove("aos-hidden");
             el.classList.add("aos-visible");
           }, delay);
           observer.unobserve(el);
@@ -38,7 +39,7 @@ export default function AnimateOnScroll({
   }, [delay]);
 
   return (
-    <div ref={ref} className={`${animation} ${className}`}>
+    <div ref={ref} className={className}>
       {children}
     </div>
   );

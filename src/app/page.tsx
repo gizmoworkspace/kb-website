@@ -3,13 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import {
-  PinnedHero,
-  FadeIn,
-  StatCounter,
-  ParallaxBg,
-  ScaleReveal,
-} from "@/components/ScrollAnimations";
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -39,644 +33,288 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* ═══════════════════════════════════════════
-          1. HERO — Pinned, full viewport
-      ═══════════════════════════════════════════ */}
-      <PinnedHero className="hero-section">
-        <section className="viewport-section bg-hero-dark">
-          {/* Charlotte skyline background */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80)`,
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a14] via-[#0a0a14]/80 to-[#0a0a14]/40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a14]/60 via-transparent to-[#0a0a14]" />
-
-          {/* Ambient gold glow */}
-          <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-gold/[0.04] rounded-full blur-[150px]" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full">
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7">
-                {/* First text — headline */}
-                <div data-hero-text className="transition-all">
-                  <h1 className="font-heading text-5xl md:text-6xl lg:text-8xl tracking-tight leading-[1.05] text-white font-semibold hero-animate">
-                    Your $350K Salary Should Feel Like $350K.
-                  </h1>
-                  <p className="mt-6 font-heading text-2xl md:text-3xl lg:text-4xl text-gold-light font-light hero-animate hero-animate-delay-1">
-                    Charlotte Makes the Math Work.
-                  </p>
+      {/* ═══ HERO ═══ */}
+      <section className="pt-32 pb-24 md:pt-40 md:pb-32 lg:pt-48 lg:pb-40">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-7">
+              <AnimateOnScroll>
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-heading">
+                  Your $350K Salary Should Feel Like $350K.{" "}
+                  <span className="text-gold">Charlotte Makes the Math Work.</span>
+                </h1>
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={150}>
+                <p className="mt-6 md:mt-8 text-lg leading-relaxed text-body max-w-2xl">
+                  You built the career, earned the income, did everything right. Your state took half of it anyway. Charlotte&apos;s flat 3.99% tax rate, top-ranked public schools, and luxury homes at 40&ndash;60% below coastal prices give your family the financial freedom and lifestyle quality the Northeast promised but never delivered.
+                </p>
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={300}>
+                <div className="mt-8 md:mt-10 flex flex-wrap gap-4">
+                  <Link href="/contact" className="btn-primary">Book Your Relocation Strategy Call</Link>
+                  <Link href="/calculator" className="btn-secondary">Run Your Numbers</Link>
                 </div>
-
-                {/* Second text — subheadline (fades in on scroll) */}
-                <div data-hero-text className="absolute top-1/2 -translate-y-1/2 left-0 px-6 md:px-8 max-w-3xl" style={{ opacity: 0 }}>
-                  <p className="font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.15] text-white/90 font-light">
-                    You built the career, earned the income, did everything right.
-                    <span className="text-gold-light"> Your state took half of it anyway.</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Kayden headshot */}
-              <div className="lg:col-span-5 flex justify-center lg:justify-end hero-animate hero-animate-delay-3">
-                <div className="relative" data-hero-text>
-                  <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-gold/30 to-transparent blur-md" />
+              </AnimateOnScroll>
+            </div>
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <AnimateOnScroll delay={200}>
+                <div className="relative">
                   <Image
                     src="/kayden-headshot.jpg"
                     alt="Kayden Benfield"
-                    width={380}
-                    height={380}
-                    className="relative rounded-full object-cover w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 border border-gold/20"
+                    width={420}
+                    height={520}
+                    className="rounded-2xl object-cover w-72 h-80 md:w-80 md:h-96 lg:w-[360px] lg:h-[440px] shadow-[0_8px_40px_rgba(0,0,0,0.1)]"
                     priority
                   />
                 </div>
-              </div>
+              </AnimateOnScroll>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 scroll-indicator">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white/40">
-              <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+      {/* ═══ PROOF BAR ═══ */}
+      <section className="py-5 border-y border-border-light">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-body-light font-body">
+            <span>✓ Licensed North Carolina Broker</span>
+            <span>✓ INNOVATE Real Estate — #1 Non-Franchised Brokerage, East Coast</span>
+            <span>✓ Agent Equity Owner</span>
+            <span>✓ Multi-State MLS — 10 States</span>
+            <span>✓ Direct Cell. No Gatekeepers.</span>
           </div>
-        </section>
-      </PinnedHero>
-
-      {/* ═══════════════════════════════════════════
-          3. PROOF TICKER
-      ═══════════════════════════════════════════ */}
-      <section className="bg-[#0a0a14] border-y border-white/5 py-4 overflow-hidden">
-        <div className="ticker-track flex gap-12 whitespace-nowrap">
-          {[...Array(2)].map((_, j) => (
-            <div key={j} className="flex gap-12 items-center">
-              {[
-                "Licensed North Carolina Broker",
-                "INNOVATE Real Estate — #1 Non-Franchised Brokerage, East Coast",
-                "Agent Equity Owner — Skin in the Game",
-                "Multi-State MLS Access — 10 States",
-                "Direct Cell. No Gatekeepers. No Hand-Offs.",
-              ].map((item, i) => (
-                <span key={i} className="flex items-center gap-2 text-sm text-white/30 font-body">
-                  <span className="text-gold/50">✓</span> {item}
-                </span>
-              ))}
-            </div>
-          ))}
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          4. THE PROBLEM WORLD — Gray/Cold
-      ═══════════════════════════════════════════ */}
-
-      {/* Viewport A: $172K */}
-      <section className="viewport-section bg-cold-100">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80"
-          className="opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-cold-100/90 via-cold-100/70 to-cold-100/90" />
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-cold-500 mb-6">
-              You Earned $400K. Your State Took
-            </p>
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="font-heading text-7xl md:text-8xl lg:text-9xl text-warm-950 font-light tracking-tight">
-              $172K
-            </p>
-          </FadeIn>
-          <FadeIn delay={400}>
-            <p className="mt-4 text-lg md:text-xl text-cold-500 font-body max-w-md mx-auto">
-              taken before you bought groceries
-            </p>
-          </FadeIn>
+      {/* ═══ AGITATION ═══ */}
+      <section className="py-24 md:py-32 lg:py-40">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-heading mb-8 md:mb-12">
+              You Earned $400K. Your State Took $172K Before You Bought Groceries.
+            </h2>
+          </AnimateOnScroll>
+          <div className="max-w-2xl">
+            <AnimateOnScroll delay={100}>
+              <p className="text-lg leading-relaxed text-body mb-6">
+                You&apos;re earning $350K&ndash;$400K and saving $800 a month. You know the math doesn&apos;t work. Your state takes 10.9&ndash;13.3% off the top before you see a dollar. Property taxes on your four-bedroom: $30K&ndash;$50K. Two kids in private school: $90K. You&apos;re not bad with money. You&apos;re in a bad jurisdiction.
+              </p>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={200}>
+              <p className="text-lg leading-relaxed text-body mb-6">
+                You feel embarrassed telling anyone you&apos;re stressed about money at this income level. Your home office is a converted closet. Your backyard is a patio. Your commute is 90 minutes each way. You earn more than your parents ever did, and you have less to show for it.
+              </p>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={300}>
+              <blockquote className="border-l-2 border-gold pl-6 my-8">
+                <p className="text-base italic text-body-light leading-relaxed">
+                  &ldquo;It feels like at the end of the month, after all our expenses, that it&apos;s still difficult to save any substantial amount of money&hellip; it feels like 3/4 of the money is already gone.&rdquo;
+                </p>
+                <cite className="block mt-3 text-sm text-body-light not-italic">&mdash; r/HENRYfinance</cite>
+              </blockquote>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={400}>
+              <p className="text-lg leading-relaxed text-body">
+                Every year you stay is another $87K&ndash;$150K in avoidable tax burden, tuition, and cost-of-living premium. Over a decade, that&apos;s $1.5M+ in wealth that never compounds. That&apos;s not a budgeting problem. That&apos;s a geography problem.
+              </p>
+            </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
-      {/* Viewport B: Saving $800/mo */}
-      <section className="viewport-section bg-cold-200">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80"
-          className="opacity-15"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-cold-200/90 via-cold-200/70 to-cold-200/90" />
-        <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-          <FadeIn>
-            <p className="font-heading text-3xl md:text-4xl lg:text-5xl text-warm-950 font-light leading-[1.3] tracking-tight">
-              You&apos;re earning $350K&ndash;$400K and saving{" "}
-              <span className="text-cold-600 font-semibold">$800 a month.</span>
-            </p>
-          </FadeIn>
-          <FadeIn delay={300}>
-            <p className="mt-8 text-lg text-cold-500 font-body max-w-xl mx-auto">
-              You&apos;re not bad with money. You&apos;re in a bad jurisdiction.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Viewport C: The Symptoms */}
-      <section className="viewport-section bg-cold-100">
-        <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
-          <FadeIn>
-            <p className="text-lg md:text-xl leading-relaxed text-cold-600 font-body">
-              You feel embarrassed telling anyone you&apos;re stressed about money at this income level.
-            </p>
-          </FadeIn>
-          <FadeIn delay={400}>
-            <p className="mt-8 text-lg md:text-xl leading-relaxed text-cold-600 font-body">
-              Your home office is a converted closet. Your backyard is a patio. Your commute is 90 minutes each way.
-            </p>
-          </FadeIn>
-          <FadeIn delay={800}>
-            <p className="mt-8 text-lg md:text-xl leading-relaxed text-cold-500 font-body">
-              You earn more than your parents ever did, and you have less to show for it.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Viewport D: $1.5M+ gut punch */}
-      <section className="viewport-section bg-cold-200">
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <p className="font-heading text-8xl md:text-9xl lg:text-[10rem] text-warm-950 font-light tracking-tight leading-none">
-              $1.5M+
-            </p>
-          </FadeIn>
-          <FadeIn delay={300}>
-            <p className="mt-6 text-lg md:text-xl text-cold-500 font-body max-w-md mx-auto">
-              in wealth that never compounds. Over a decade.
-            </p>
-          </FadeIn>
-          <FadeIn delay={500}>
-            <p className="mt-4 text-sm text-cold-400 font-body">
-              That&apos;s not a budgeting problem. That&apos;s a geography problem.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          5. THE SHIFT — Gray → Gold transition
-      ═══════════════════════════════════════════ */}
-      <section className="viewport-section bg-gradient-to-b from-cold-200 via-[#c9a84c]/20 to-hero-dark">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gold/10 to-hero-dark" />
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <FadeIn>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-7xl tracking-tight leading-[1.1] text-warm-950 font-semibold">
+      {/* ═══ CROSSHEAD (Dark Section) ═══ */}
+      <section className="dark-section py-24 md:py-32 lg:py-40">
+        <div className="max-w-4xl mx-auto px-8 md:px-12 text-center">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
               The Problem Isn&apos;t Discipline. It&apos;s Geography.
             </h2>
-          </FadeIn>
-          <FadeIn delay={400}>
-            <p className="mt-6 font-heading text-2xl md:text-3xl lg:text-4xl tracking-tight text-gold font-light">
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={200}>
+            <p className="mt-6 font-heading text-2xl md:text-3xl text-gold">
               And the Solution Has a Flat 3.99% Tax Rate.
             </p>
-          </FadeIn>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          6. ENTERING CHARLOTTE — Warm world
-      ═══════════════════════════════════════════ */}
-
-      {/* Stat: 3.99% */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80"
-          className="opacity-30"
-        />
-        <div className="absolute inset-0 bg-hero-dark/60" />
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={3.99} decimals={2} className="font-heading text-7xl md:text-8xl lg:text-9xl text-gold font-light tracking-tight" suffix="%" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">flat state income tax rate</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Stat: 157 daily */}
-      <section className="min-h-[50vh] flex items-center justify-center relative bg-hero-dark overflow-hidden">
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={157} className="font-heading text-7xl md:text-8xl lg:text-9xl text-white font-light tracking-tight" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">new residents move to Charlotte daily</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Stat: $1.4M */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
-          className="opacity-25"
-        />
-        <div className="absolute inset-0 bg-hero-dark/60" />
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={1.4} prefix="$" suffix="M" decimals={1} className="font-heading text-7xl md:text-8xl lg:text-9xl text-gold font-light tracking-tight" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">Charlotte luxury median vs. $2.5M+ coastal</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Stat: 191 flights */}
-      <section className="min-h-[50vh] flex items-center justify-center relative bg-hero-dark overflow-hidden">
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={191} className="font-heading text-7xl md:text-8xl lg:text-9xl text-white font-light tracking-tight" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">nonstop destinations from CLT</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Stat: 37,600 jobs */}
-      <section className="min-h-[50vh] flex items-center justify-center relative bg-hero-dark overflow-hidden">
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={37600} prefix="" className="font-heading text-7xl md:text-8xl lg:text-9xl text-gold font-light tracking-tight" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">jobs added in 2025 — highest growth rate among major metros</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Stat: 121% */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1920&q=80"
-          className="opacity-25"
-        />
-        <div className="absolute inset-0 bg-hero-dark/60" />
-        <div className="relative z-10 text-center px-6">
-          <FadeIn>
-            <StatCounter value={121} suffix="%" className="font-heading text-7xl md:text-8xl lg:text-9xl text-gold font-light tracking-tight" />
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-4 text-lg text-white/50 font-body">appreciation over the past decade — still 40–60% below coastal</p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          7. THE PROCESS — How It Works
-      ═══════════════════════════════════════════ */}
-      <section className="bg-hero-dark py-32">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <FadeIn className="text-center mb-24">
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-white font-semibold">
-              Your Relocation,{" "}
-              <span className="text-gold">Engineered from Tax Code to Country Club.</span>
+      {/* ═══ HOW IT WORKS ═══ */}
+      <section className="py-24 md:py-32 lg:py-40">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-heading mb-8 md:mb-12 text-center">
+              Your Relocation, Engineered from Tax Code to Country Club.
             </h2>
-          </FadeIn>
-        </div>
-      </section>
+          </AnimateOnScroll>
 
-      {/* Step 01 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
-          className="opacity-15"
-        />
-        <div className="absolute inset-0 bg-hero-dark/80" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8">
-          <FadeIn>
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 left-0">01</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step One</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              Tax Arbitrage Consultation
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl">
-              Your move starts with a personalized financial model&mdash;not a neighborhood tour. You&apos;ll see the exact dollar figure your family recaptures annually. Not a range. Not an estimate. Your number. So that you make the decision based on math, not emotion.
-            </p>
-            <p className="mt-4 text-sm italic text-white/30 font-body">
-              NC flat 3.99% vs. NY 10.9%, NJ 10.75%, CA 13.3%. Typical recapture: $50K&ndash;$150K+ annually.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Step 02 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1920&q=80"
-          className="opacity-15"
-        />
-        <div className="absolute inset-0 bg-hero-dark/80" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 text-right">
-          <FadeIn direction="right">
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 right-0">02</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step Two</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              School District Mapping
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl ml-auto">
-              Your children&apos;s education isn&apos;t a line item to cut&mdash;it&apos;s the reason you&apos;re paying $45K&ndash;$90K per year right now. Kayden maps your kids&apos; academic priorities to specific school feeder patterns&mdash;elementary through high school.
-            </p>
-            <p className="mt-4 text-sm italic text-white/30 font-body">
-              Weddington, Marvin Ridge, Ardrey Kell: top 20 statewide. Union County: top 5% of NC.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Step 03 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <div className="absolute inset-0 bg-hero-dark/90" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8">
-          <FadeIn>
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 left-0">03</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step Three</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              Lifestyle-First Neighborhood Matching
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl">
-              Most agents start with the MLS. Kayden starts with your life. Your commute patterns, weekend habits, dining preferences, and trailing spouse priorities are mapped to 2&ndash;3 Charlotte micro-markets.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Step 04 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1499793983394-e58fc2e67a11?w=1920&q=80"
-          className="opacity-15"
-        />
-        <div className="absolute inset-0 bg-hero-dark/80" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 text-right">
-          <FadeIn direction="right">
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 right-0">04</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step Four</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              Curated Home Search with Virtual Pre-Tours
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl ml-auto">
-              You&apos;re 800 miles away. Every trip costs $3K&ndash;$5K and a weekend you don&apos;t have. Kayden pre-screens all inventory and sends curated shortlists with video walkthroughs. Your first visit is productive&mdash;not exploratory.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Step 05 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <div className="absolute inset-0 bg-hero-dark/90" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8">
-          <FadeIn>
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 left-0">05</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step Five</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              Radical Transparency Communication
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl">
-              No disappearing for three days. No vague &ldquo;things are moving along&rdquo; updates. No hand-offs to a junior associate. Kayden tells you exactly what&apos;s happening, what to expect, and what your options are&mdash;at every stage.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Step 06 */}
-      <section className="viewport-section bg-hero-dark relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
-          className="opacity-15"
-        />
-        <div className="absolute inset-0 bg-hero-dark/80" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 text-right">
-          <FadeIn direction="right">
-            <span className="font-heading text-[140px] md:text-[180px] leading-none text-white/[0.03] font-bold absolute -top-10 right-0">06</span>
-            <p className="text-[11px] tracking-[0.2em] uppercase font-body font-semibold text-gold mb-4">Step Six</p>
-            <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white font-semibold mb-6">
-              First 100 Days Integration Program
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-body max-w-xl ml-auto">
-              The transaction closes. Most agents disappear. Kayden&apos;s relationship extends 12 months past closing. You get curated introductions to country club membership directors, local wealth advisors, pediatricians, school administrators, and professional networks.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          8. DEEP PROOF — Data Cards
-      ═══════════════════════════════════════════ */}
-      <section className="bg-hero-dark py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <FadeIn className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-white font-semibold">
-              The Numbers.{" "}
-              <span className="text-gold">Verified. Cited. Run Them Yourself.</span>
-            </h2>
-          </FadeIn>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-10 mt-16">
             {[
-              {
-                title: "Tax Arbitrage",
-                body: "NC\u2019s flat 3.99% vs. NY (10.9%), CA (13.3%), NJ (10.75%), D.C. (10.75%). No state estate tax. A $350K household typically recaptures $50K\u2013$150K+ annually.",
-              },
-              {
-                title: "Housing",
-                body: "Charlotte luxury median: $1.4M vs. $2.5M+ (NYC), $3.2M+ (LA), $2.1M+ (D.C.). 121% appreciation over the past decade\u2014still 40\u201360% below coastal.",
-              },
-              {
-                title: "Schools",
-                body: "Weddington, Marvin Ridge, Ardrey Kell: top 20 statewide. Union County: top 5% of NC. AP and IB programs rival $45K\u2013$48K private academies.",
-              },
-              {
-                title: "Jobs",
-                body: "Charlotte MSA added 37,600 jobs in 2025\u2014highest growth rate (2.7%) among all major U.S. metros. Second-largest U.S. banking center.",
-              },
-              {
-                title: "Connectivity",
-                body: "CLT Airport: 191 nonstop destinations. NYC is 90 minutes. D.C. is 75. Your legacy network doesn\u2019t disappear.",
-              },
-              {
-                title: "Growth",
-                body: "157 new residents daily. #1 net in-migration metro in the U.S. for three consecutive years.",
-              },
-            ].map((card, i) => (
-              <ScaleReveal key={i} delay={i * 100}>
-                <div className="bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm rounded-lg p-6 md:p-8 hover:bg-white/[0.06] transition-all duration-500">
-                  <h3 className="font-heading text-xl md:text-2xl text-gold font-semibold mb-3">
-                    {card.title}
-                  </h3>
-                  <p className="text-[15px] leading-relaxed text-white/50 font-body">
-                    {card.body}
-                  </p>
+              { num: "01", title: "Tax Arbitrage Consultation", body: "Your move starts with a personalized financial model\u2014not a neighborhood tour. You\u2019ll see the exact dollar figure your family recaptures annually from state income tax reduction, property tax savings, and private school tuition elimination. Not a range. Not an estimate. Your number." },
+              { num: "02", title: "School District Mapping", body: "Kayden maps your kids\u2019 academic priorities, extracurricular needs, and social preferences to specific school feeder patterns\u2014elementary through high school. So that you enroll in Weddington, Marvin Ridge, or Ardrey Kell with confidence." },
+              { num: "03", title: "Lifestyle-First Neighborhood Matching", body: "Before a single property is shown, your commute patterns, weekend habits, dining preferences, peer community needs, and trailing spouse priorities are mapped to 2\u20133 Charlotte micro-markets." },
+              { num: "04", title: "Curated Home Search with Virtual Pre-Tours", body: "Kayden pre-screens all inventory, eliminates non-starters, and sends curated shortlists with video walkthroughs and written neighborhood context. Your first in-person visit is productive\u2014not exploratory." },
+              { num: "05", title: "Radical Transparency Communication", body: "No disappearing for three days. No vague \u201cthings are moving along\u201d updates. No hand-offs to a junior associate. Kayden tells you exactly what\u2019s happening, what to expect, and what your options are\u2014at every stage." },
+              { num: "06", title: "First 100 Days Integration Program", body: "The transaction closes. Most agents disappear. You get curated introductions to country club membership directors, local wealth advisors, pediatricians, school administrators, parent groups, and professional networks." },
+            ].map((step, i) => (
+              <AnimateOnScroll key={i} delay={i * 80}>
+                <div className="card p-8 md:p-10">
+                  <span className="font-heading text-5xl text-border leading-none block mb-4">{step.num}</span>
+                  <h3 className="font-heading text-xl md:text-2xl text-heading mb-4">{step.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-body">{step.body}</p>
                 </div>
-              </ScaleReveal>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PROOF DATA ═══ */}
+      <section className="py-24 md:py-32 lg:py-40">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-heading mb-8 md:mb-12 text-center">
+              The Numbers. Verified. Cited. Run Them Yourself.
+            </h2>
+          </AnimateOnScroll>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            {[
+              { title: "Tax Arbitrage", body: "North Carolina\u2019s flat 3.99% state income tax rate vs. New York (10.9%), California (13.3%), New Jersey (10.75%). No state estate tax. A $350K-income household typically recaptures $50K\u2013$150K+ annually." },
+              { title: "Housing", body: "Charlotte luxury median sale price: $1.4M vs. $2.5M+ (NYC metro), $3.2M+ (LA). Luxury properties have appreciated 121% over the past decade and still trade at a 40\u201360% discount to coastal equivalents." },
+              { title: "Schools", body: "Weddington High, Marvin Ridge, and Ardrey Kell consistently rank top 20 statewide. AP and IB programs rival the private academies charging $45K\u2013$48K per seat." },
+              { title: "Jobs", body: "Charlotte MSA added 37,600 nonfarm payroll jobs in 2025\u2014the highest job growth rate (2.7%) among all major U.S. metros. Second-largest U.S. banking center." },
+              { title: "Connectivity", body: "CLT Airport: 191 nonstop destinations. Your parents in New York are a 90-minute flight. Your former colleagues in D.C. are 75 minutes." },
+              { title: "Growth", body: "157 new residents move to Charlotte daily. Charlotte has been the #1 net in-migration metro in the U.S. for three consecutive years." },
+            ].map((card, i) => (
+              <AnimateOnScroll key={i} delay={i * 80}>
+                <div className="card p-8 md:p-10">
+                  <h3 className="font-heading text-xl text-heading mb-3">{card.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-body">{card.body}</p>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
 
-          <FadeIn delay={600} className="text-center mt-8">
-            <p className="text-xs text-white/20 font-body">
+          <AnimateOnScroll delay={500}>
+            <p className="text-center text-xs text-body-light mt-8">
               Sources: IRS migration data, U.S. Census, Charlotte Regional Business Alliance, U.S. News school rankings, CLT Airport authority.
             </p>
-          </FadeIn>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          9. WHY KAYDEN — Split screen
-      ═══════════════════════════════════════════ */}
-      <section className="viewport-section bg-hero-dark relative">
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full">
+      {/* ═══ WHY KAYDEN ═══ */}
+      <section className="py-24 md:py-32 lg:py-40">
+        <div className="max-w-6xl mx-auto px-8 md:px-12">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <FadeIn direction="left">
-              <div className="flex justify-center">
-                <div className="relative">
-                  <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-gold/10 to-transparent blur-lg" />
-                  <Image
-                    src="/kayden-headshot.jpg"
-                    alt="Kayden Benfield"
-                    width={500}
-                    height={500}
-                    className="relative rounded-2xl object-cover w-72 h-72 md:w-96 md:h-96 lg:w-[450px] lg:h-[450px] border border-gold/10"
-                  />
-                </div>
-              </div>
-            </FadeIn>
-
             <div>
-              <FadeIn direction="right">
-                <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.1] text-white font-semibold mb-8">
-                  What Changes{" "}
-                  <span className="text-gold">When the Geography Changes.</span>
+              <AnimateOnScroll>
+                <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-heading mb-8 md:mb-12">
+                  What Changes When the Geography Changes.
                 </h2>
-              </FadeIn>
-              <FadeIn direction="right" delay={200}>
-                <p className="text-lg leading-relaxed text-white/50 font-body mb-6">
-                  You&apos;ve seen agents who push quick sales because they&apos;re juggling 40 transactions. You&apos;ve experienced communication blackouts, hand-offs to junior staff, and properties shown that blatantly ignored what you asked for.
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={100}>
+                <p className="text-lg leading-relaxed text-body mb-6">
+                  You&apos;ve seen agents who push quick sales because they&apos;re juggling 40 transactions and need yours off the desk. You&apos;ve experienced communication blackouts, hand-offs to junior staff, and properties shown that blatantly ignored what you asked for.
                 </p>
-              </FadeIn>
-              <FadeIn direction="right" delay={400}>
-                <p className="text-lg leading-relaxed text-white/50 font-body">
-                  Kayden operates differently. Every client gets direct cell access&mdash;no gatekeepers, no assistants screening calls. The financial arbitrage report comes before a single showing. And if a property doesn&apos;t serve your long-term wealth, he&apos;ll tell you not to buy it&mdash;even when it costs him the commission.
+              </AnimateOnScroll>
+              <AnimateOnScroll delay={200}>
+                <p className="text-lg leading-relaxed text-body">
+                  Kayden operates differently. Every client gets direct cell access&mdash;no gatekeepers, no assistants screening calls. The financial arbitrage report comes before a single showing. The lifestyle mapping comes before the MLS search. And if a property doesn&apos;t serve your long-term wealth, he&apos;ll tell you not to buy it&mdash;even when it costs him the commission.
                 </p>
-              </FadeIn>
+              </AnimateOnScroll>
             </div>
+            <AnimateOnScroll delay={200}>
+              <div className="flex justify-center">
+                <Image
+                  src="/kayden-headshot.jpg"
+                  alt="Kayden Benfield"
+                  width={480}
+                  height={560}
+                  className="rounded-2xl object-cover w-80 h-96 md:w-96 md:h-[480px] shadow-[0_8px_40px_rgba(0,0,0,0.1)]"
+                />
+              </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          10. FAQ
-      ═══════════════════════════════════════════ */}
-      <section className="bg-cream py-20 md:py-28 lg:py-32">
-        <div className="max-w-3xl mx-auto px-6 md:px-8">
-          <FadeIn>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight leading-[1.2] text-warm-950 font-semibold mb-12">
-              Your Questions.{" "}
-              <span className="text-gold">Answered Directly.</span>
+      {/* ═══ FAQ ═══ */}
+      <section className="py-24 md:py-32 lg:py-40">
+        <div className="max-w-3xl mx-auto px-8 md:px-12">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-heading mb-12">
+              Your Questions. Answered Directly.
             </h2>
-          </FadeIn>
+          </AnimateOnScroll>
 
           <div className="space-y-0">
             {faqs.map((faq, i) => (
-              <FadeIn key={i} delay={i * 80}>
-                <div className="border-b border-warm-200">
+              <AnimateOnScroll key={i} delay={i * 60}>
+                <div className="border-b border-border">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full py-5 flex items-start justify-between gap-4 text-left"
+                    className="w-full py-6 flex items-start justify-between gap-4 text-left"
                   >
-                    <span className="font-heading text-lg md:text-xl text-warm-950 font-medium leading-snug">
-                      {faq.q}
-                    </span>
-                    <span
-                      className={`text-gold text-2xl leading-none flex-shrink-0 transition-transform duration-300 ${
-                        openFaq === i ? "rotate-45" : ""
-                      }`}
-                    >
-                      +
-                    </span>
+                    <span className="font-heading text-lg md:text-xl text-heading leading-snug">{faq.q}</span>
+                    <span className={`text-gold text-2xl leading-none flex-shrink-0 transition-transform duration-300 ${openFaq === i ? "rotate-45" : ""}`}>+</span>
                   </button>
-                  <div
-                    className={`accordion-content ${openFaq === i ? "open" : ""}`}
-                  >
+                  <div className={`accordion-content ${openFaq === i ? "open" : ""}`}>
                     <div>
-                      <p className="pb-5 text-[15px] leading-relaxed text-warm-600 font-body">
-                        {faq.a}
-                      </p>
+                      <p className="pb-6 text-[15px] leading-relaxed text-body">{faq.a}</p>
                     </div>
                   </div>
                 </div>
-              </FadeIn>
+              </AnimateOnScroll>
             ))}
           </div>
 
           {/* Risk Reversal */}
-          <FadeIn delay={500}>
-            <div className="mt-12 bg-warm-100 border-l-3 border-gold-dark rounded-r-lg p-6 md:p-8">
-              <h3 className="font-heading text-xl text-warm-950 font-semibold mb-3">
-                Risk Reversal
-              </h3>
-              <p className="text-[15px] leading-relaxed text-warm-600 font-body">
+          <AnimateOnScroll delay={400}>
+            <div className="mt-12 card p-8 border-l-2 border-gold !rounded-l-none">
+              <h3 className="font-heading text-xl text-heading mb-3">Risk Reversal</h3>
+              <p className="text-[15px] leading-relaxed text-body">
                 Kayden&apos;s advisory operates on a fiduciary principle: if a property doesn&apos;t meet stringent investment and lifestyle criteria, he advises you to walk away&mdash;even at the cost of his commission. You pay nothing upfront. Commission is earned only upon a successful close. You get 12 months of post-close support.
               </p>
             </div>
-          </FadeIn>
+          </AnimateOnScroll>
 
-          <FadeIn delay={600}>
-            <p className="mt-8 text-base md:text-[17px] leading-relaxed text-warm-700 font-body">
+          <AnimateOnScroll delay={500}>
+            <p className="mt-8 text-base leading-relaxed text-body">
               Every year you stay in a high-tax coastal metro is another $87K&ndash;$150K in wealth that doesn&apos;t compound. Over the next decade, that gap becomes $1.5M+. The question isn&apos;t whether Charlotte works financially&mdash;the math is settled. The question is how long you&apos;ll wait before you run your own numbers.
             </p>
-          </FadeIn>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          11. FINAL CTA
-      ═══════════════════════════════════════════ */}
-      <section className="viewport-section bg-navy relative">
-        <ParallaxBg
-          src="https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?w=1920&q=80"
-          className="opacity-20"
-        />
-        <div className="absolute inset-0 bg-navy/70" />
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-gold/[0.06] rounded-full blur-[150px]" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 text-center">
-          <FadeIn>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] text-white font-semibold">
+      {/* ═══ FINAL CTA ═══ */}
+      <section className="dark-section py-24 md:py-32 lg:py-40">
+        <div className="max-w-3xl mx-auto px-8 md:px-12 text-center">
+          <AnimateOnScroll>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
               Book Your Relocation Strategy Call
             </h2>
-          </FadeIn>
-          <FadeIn delay={200}>
-            <p className="mt-6 text-lg md:text-xl text-white/50 font-body">
-              30 minutes. No pitch. Just your numbers.
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={150}>
+            <p className="mt-6 text-lg" style={{ color: "rgba(255,255,255,0.5)" }}>
+              30 minutes. No pitch. No obligation. Walk through your tax scenario, school priorities, and neighborhood criteria with Kayden directly.
             </p>
-          </FadeIn>
-          <FadeIn delay={400}>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={300}>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="btn-gold text-base !py-4 !px-10">
-                Book Your Strategy Call
-              </Link>
-              <Link href="/calculator" className="btn-outline text-base !py-4 !px-10">
-                Run Your Numbers First
-              </Link>
+              <Link href="/contact" className="btn-primary !bg-white !text-heading hover:!bg-gray-100">Book Your Strategy Call</Link>
+              <Link href="/calculator" className="btn-secondary !border-white/30 !text-white hover:!border-white">Run Your Numbers First</Link>
             </div>
-          </FadeIn>
-          <FadeIn delay={600}>
-            <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/25 font-body">
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={400}>
+            <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>
               <span>✓ 157 new residents daily</span>
               <span>✓ 3.99% flat state tax</span>
               <span>✓ 191 nonstop CLT flights</span>
               <span>✓ 37,600 jobs added in 2025</span>
             </div>
-          </FadeIn>
+          </AnimateOnScroll>
         </div>
       </section>
     </div>
